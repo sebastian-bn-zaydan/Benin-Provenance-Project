@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ========== Meta Tags ========== -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ======== Page title ============ -->
+    <title>Listico - Listing & Directory HTML Template</title>
+    
+    <!-- ========== Favicon Icon ========== -->
+    <link rel="shortcut icon" href="assets/img/favicon.png">
+
+    <!-- ===========  All Stylesheet ================= -->
+    <!--  fontawesome css plugins -->
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+    <!--  slick css plugins -->
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <!--  rangeSlider css plugins -->
+    <link rel="stylesheet" href="assets/css/ion.rangeSlider.min.css">
+    <!--  slick theme css plugins -->
+    <link rel="stylesheet" href="assets/css/slick-theme.css">
+    <!--  magnific-popup css plugins -->
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <!--  owl carosuel css plugins
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <!--  owl theme css plugins 
+    <link rel="stylesheet" href="assets/css/owl.theme.css">
+     -->
+    <!--  meanmenu css plugins -->
+    <link rel="stylesheet" href="assets/css/meanmenu.min.css">
+    <!--  Bootstrap css plugins -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- template main style css file -->
+    <link rel="stylesheet" href="style.css">
+    <!-- template responsive css stylesheet -->
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+	<!--- map stuff -->
+	<meta http-equiv="imagetoolbar" content="no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css">
+	<link rel="stylesheet" href="https://cdn.rawgit.com/ardhi/Leaflet.MousePosition/master/src/L.Control.MousePosition.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js" type="text/javascript"></script>
+	<script src="https://cdn.rawgit.com/ardhi/Leaflet.MousePosition/master/src/L.Control.MousePosition.js" type="text/javascript"></script>
+	<script src="./js/leaflet_awesome_number_markers.js"></script>
+	<script src="./js/greyscale.js"></script>
+	<script src="./js/rainbowvis.js"></script>
+	<link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+	<link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
+	<style type="text/css">
+		#basemapslidercontainer {
+		  position: absolute;
+		  top: 50px;
+		  right: 10px;
+		  z-index: 1000;
+		}
+
+		#basemapslider{
+		  font-size:62.5%;
+		  margin: 14px;
+		  height: 125px;
+		  width:7px;
+		}
+
+		#map{
+		   width: 1200px;
+		   height: 500px;
+		   background-color: #f1f6f9;
+		}
+	</style>
+	<script>
+		$(document).ready(function () {
+						  
+			$('#basemapslider').mousedown(function(){
+			  map.dragging.disable();
+			})
+
+			$('#basemapslider').mouseup(function(){
+			  map.dragging.enable();
+			})
+			
+			const markerHtmlStyles = `
+			  background-color: #fdaf6f;
+			  width: 1rem;
+			  height: 1rem;
+			  display: block;
+			  left: -.1rem;
+			  top: -.6rem;
+			  position: relative;
+			  border-radius: .5rem .5rem 0;
+			  transform: rotate(45deg);
+			  opacity: 0.8;
+			  border: 1px solid #FFFFFF`
+			  
+			 const highlightedMarkerHtmlStyles = `
+			  background-color: #FFFFFF;
+			  width: 1rem;
+			  height: 1rem;
+			  display: block;
+			  left: -.1rem;
+			  top: -.6rem;
+			  position: relative;
+			  border-radius: .5rem .5rem 0;
+			  transform: rotate(45deg);
+			  opacity: 0.8;
+			  border: 1px solid #d34751`
+			
+			//var rainbow = new Rainbow(); 
+			//rainbow.setNumberRange(1,5);
+			//rainbow.setSpectrum('#fdaf6f', '#adc25d');
+			var tagsNum = 1;
+			function addtags(tag){
+				if (tagsNum<8) {
+					var tagId = "tagN"+tagsNum;
+					var newTag = document.getElementById(tagId)
+					newTag.getElementsByTagName('span')[0].innerHTML = tag;
+					tagsNum += 1;
+				}
+				//newTag.setAttribute('onclick', 'MyFunction(\"'+tag+'\");');
+			}
+			var tag_lst = new Set();
+			var mapboxAccessToken = 'pk.eyJ1IjoicGRrZmp6IiwiYSI6ImNramQ2bDY0MTExaHMydnFxdDgxMDUwNnoifQ.BsWJfll89GgrBCqGorqegw';
+			var map = L.map('map').setView([40, -20], 2);
+			markersLayer = new L.FeatureGroup();
+		    var itemMarkers = new L.FeatureGroup();
+			var baselayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapboxAccessToken, {
+				id: 'mapbox/light-v9',
+				maxZoom: 9,
+				minZoom: 3,
+				attribution: 'Map data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		    }).addTo(map);
+			var inCurrSlide = 0;
+			var currSlide = '';
+			console.log('here')
+		    $.getJSON("./data/all.geojson",function(data){
+				console.log('here!')
+				myL= L.geoJson(data,{
+				  onEachFeature: function onEachFeature(feature,layer){
+					layer.on('click', function (e) {
+						document.getElementById("ArtifactName").innerText = feature.properties.name;
+						document.getElementById("artifactImg").src = feature.properties.img_url;
+						console.log('here!!')
+						console.log(feature.properties.item)
+						var featureGeo = "./data/"+feature.properties.item+".geojson";
+						console.log(featureGeo);
+						markersLayer.clearLayers();
+						$.getJSON(featureGeo,function(data){
+							myL2 = L.geoJson(data,{
+								pointToLayer: function(feature,latlng){
+									console.log('here!');
+									var thisIcon = L.icon({
+										//html: `<span id="${feature.properties.AlternativeName+'_pin'}" style="${markerHtmlStyles}; background-color:#9999ff;" />`,
+										iconUrl: 'assets/img/flag.png',
+										iconSize:     [26, 26], // size of the icon
+										popupAnchor:  [0, 0], // point from which the popup should open relative to the iconAnchor
+										className: "item-custom-pin"
+									});
+									console.log('here!!');
+									var marker = L.marker(latlng,{icon: thisIcon});
+									marker.bindPopup('<font size="+2">'+feature.properties.yearStr+'</font>'+'<br/>'+feature.properties.provenance);
+									return marker;
+								}
+							}).addTo(markersLayer);
+						})
+						map.addLayer(markersLayer);
+					})
+			      },
+				pointToLayer: function(feature,latlng){
+					// Code to bind the features to their preview
+					//var newItem = document.createElement("div");
+					//newItem.classList.add("slide-item");
+					//newItem.innerHTML=`<h3>1</h3>`;
+					//newItem.className = "col-md-4 col-sm-12";
+					var singlePopularItem = document.createElement("div");
+					singlePopularItem.classList.add("single-popular-item");
+					var itemCoverImage = document.createElement("div");
+					itemCoverImage.classList.add("item-cover-image");
+					itemCoverImage.classList.add("bg-cover");
+					itemCoverImage.style = "background-image: url('"+feature.properties.img_url+"')";
+					var tagsDiv = document.createElement("div");
+					tagsDiv.className = "tags"
+					var  tagsTable = document.createElement("ul");
+					//for (var ii = 0; ii < feature.properties.tags.length; ii++) {
+					//	tag_lst.add(feature.properties.tags[ii]);
+					//	var tag = document.createElement("li");
+					//	tag.innerHTML = `<a href="#" onclick="MyFunction('${feature.properties.tags[ii]}');">${feature.properties.tags[ii]}</a>`;
+					//	tagsTable.appendChild(tag);
+					//}
+					tag_lst.add(feature.properties.institution);
+					var tag = document.createElement("li");
+					tag.innerHTML = `<a href="#" onclick="MyFunction('${feature.properties.institution}');">${feature.properties.institution}</a>`;
+					tagsTable.appendChild(tag);
+					//tagsDiv.innerHTML = `<a href="#" class="btn-wishlist"><i class="far fa-heart"></i></a>`;
+					tagsDiv.appendChild(tagsTable);
+					itemCoverImage.appendChild(tagsDiv);
+					singlePopularItem.appendChild(itemCoverImage);
+					var itemCategory = document.createElement("div");
+					itemCategory.className="item-category";
+					itemCategory.inerHTML = `<div class="cat-icon"><img src="assets/img/cafe.png"></div>`
+					singlePopularItem.appendChild(itemCategory);
+					var itemContent = document.createElement("div");
+					itemContent.className="item-content";
+					itemContent.innerHTML = `<div style="height: 100px;"><h5><a href="listing-single-details.html">`+feature.properties.name
+						+`</a></h5></div>
+						    <div class="item-feedback">
+                                <ul>
+                                    <li><i class="fas fa-globe"></i></li>
+                                    <li><i class="fas fa-globe"></i></li>
+                                </ul>
+                                2 versions
+                            </div>`;
+					var itemDetails = document.createElement("div");
+					itemDetails.className = "item-details"
+					var itemMeta = document.createElement("div");
+					itemMeta.className="item-meta-data open";
+					itemMeta.innerHTML = `
+					             <ul>
+                                    <li>
+										<i class="fas fa-map-marker-alt"></i>
+                                        <span> Favorite: </span>
+										<a href="${feature.properties.restaurant_url}">${feature.properties.restaurant}</a></li>
+                                </ul>`;
+					itemContent.appendChild(itemMeta);
+					singlePopularItem.appendChild(itemContent);
+                    if (inCurrSlide == 0) {
+						currSlide = singlePopularItem;
+						inCurrSlide = 1;
+					} else {
+						var supItem = document.createElement("div");
+						supItem.classList.add("slide-item");
+						supItem.appendChild(currSlide);
+						supItem.appendChild(singlePopularItem);
+						$('#dish-preview').slick('slickAdd',supItem);
+						inCurrSlide = 0;
+					}
+					<!--console.log(feature.properties.name);-->
+					///////////////////
+					var thisIcon = L.divIcon({
+						html: `<span id="${feature.properties.name+'_pin'}" style="${markerHtmlStyles};" />`,
+						className: "my-custom-pin"
+					});
+					var marker = L.marker(latlng,{icon: thisIcon});
+					<!--
+					marker.bindPopup('<font size="+2">'+feature.properties.name+'</font>'+'<br/><img src="'+feature.properties.image_url+'" width="250" onerror="this.style.display=\'none\'"/>');
+					-->
+					marker.on('mouseover', function(e) {
+						var popup = L.popup()
+					   .setLatLng(e.latlng) 
+					   .setContent('<font size="+1">'+feature.properties.name+'</font>'+'<br/><img src="'+feature.properties.img_url+'" style="  width: 200px; height: 100px; object-fit: contain;" onerror="this.style.display=\'none\'"/>')
+					   .openOn(map)
+					});
+					return marker;
+			   }
+			   }).addTo(map);
+			   tag_lst.forEach(addtags);
+			});
+		})
+	</script>
+	<script>		  
+	function MyFunction(val) {
+		//console.log(markersLayer);
+		markersLayer.clearLayers();
+		Object.keys(myL._layers).forEach(function(key){
+			layer = myL._layers[key];
+			if (layer.feature.properties.tags.includes(val)) {
+				document.getElementById(layer.feature.properties.name+'_pin').style.backgroundColor = "#6699ff";
+			} else {
+				document.getElementById(layer.feature.properties.name+'_pin').style.backgroundColor = "#fdaf6f";
+			}
+		})
+	}
+	</script>
+</head>
+
+<body class="theme_body">
+    
+    <!-- preloader element started -->
+        <div class="loader-wrap">
+            <div class="pin"></div>
+            <div class="pulse"></div>
+        </div>
+    <!-- preloader element end -->
+    
+    
+    <!-- header section start -->
+    <header class="header-section">
+        <!-- top bar -->
+        <div class="top-bar-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-md-8 col-12">
+                        <div class="top-bar-left">
+                            <span>Mapping the Provenance of the Benin Bronzes</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-4 col-12 text-md-right">
+                        <div class="top-bar-right">
+                            <div class="user-setting">
+                                <ul>
+									<!--
+                                    <li><a href="#"><i class="fas fa-sign-out-alt"></i>Login</a></li>
+                                    -->
+                                    <li><a href="#"><i class="fas fa-user"></i>Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- main menu -->
+        <div class="main-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 logo">
+                        <a class="navbar-brand" href="index.html">
+                            <img src="assets/img/logo.png" class="logo-display" alt="shipo">
+                        </a> 
+                    </div> <!-- /.col-md-3 logo -->
+                    <div class="col-md-9 d-none d-lg-block text-lg-right">
+                        <nav id="responsive-menu" class="main-menu">
+                            <ul class="menu-items">
+                                <li><a href="#">map</a>
+									<!--
+                                    <ul class="submenu">
+                                        <li><a href="index.html">Home One</a></li>
+                                        <li><a href="index-2.html">Home Two</a></li>
+                                    </ul>
+                                    -->    
+                                </li>
+                                 <li><a href="about.html">About</a>
+                                    <ul class="submenu">
+                                        <li><a href="tags.html">Positionality</a></li>
+                                    </ul></li>
+                                 <li><a href="listing-single-details.html">History</a>    
+                                 </li>
+                                 <li><a href="explors-map-sidebar.html">Find</a></li>
+                                 <li><a href="explors-map-sidebar.html">Institutions</a></li>
+                                 <li><a href="#">People</a>
+									<!--
+                                    <ul class="submenu">
+                                        <li><a href="login.html">login</a></li>
+                                        <li><a href="register.html">register</a></li>
+                                        <li><a href="booking.html">booking</a></li>
+                                        <li><a href="popular-locations.html">Popular Place</a></li>
+                                        <li><a href="contact.html">contact</a></li>
+                                    </ul>
+                                    --> 
+                                </li>
+                            </ul>
+                            <a href="#" class="btn-booking-start">Submit Missing Items</a>
+                        </nav>
+                    </div> <!-- /. col-md-9 d-none d-lg-block -->
+
+                    <div class="col-12">
+                        <div class="responsive-menu"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header section end -->
+
+    <!-- hero section start -->
+    <section class="hero-section welcome-section">
+        <div class="container-fluid m-lg-0 p-lg-0">
+            <div class="row">
+                <div class="search-section d-flex col-lg-5 col-sm-12 p-0 bg-cover" style="background-image: url('assets/img/search-bg.jpg')">
+                    <div class="search-tab-wrap">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs">
+                           <li class="nav-item">
+                              <a class="nav-link active" data-toggle="tab" href="#place">About</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" data-toggle="tab" href="#event">Provenance</a>
+                           </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                           <div class="tab-pane active container" id="place">
+                               <div class="search-form-box">
+                                   <h3 id="ArtifactName"> The Edo Provenance Project</h3>
+                                   <p>Institutions: MFA.</p>
+                                   <!--
+                                   <form action="#" class="search-form">
+                                       <input type="text" placeholder="Where to go?" name="place">
+                                       <input type="text" placeholder="Location" name="location">
+                                       <select>
+                                           <option value="Categroy">Categroy</option>
+                                           <option value="1">Hotel</option>
+                                           <option value="2">Restaurant</option>
+                                           <option value="3">Property</option>
+                                           <option value="4">Shopping</option>
+                                       </select>
+                                       <button type="submit">Search request</button>
+                                   </form>
+                                   -->
+                                   <img id="artifactImg" class="img-fluid" src="./assets/img/beninBronze.png" width="250" onerror="this.style.display=\'none\'"/>
+                               </div>
+                           </div>
+                           <div class="tab-pane container" id="event">
+                                <div class="search-form-box">
+                                   <h3>Discover Great Event.</h3>
+                                   <p>Tag: Nightlife, Hotel, Restaurant, Sport, Shop.</p>
+                                   <form action="#" class="search-form">
+                                       <input type="text" placeholder="Where to go?" name="place">
+                                       <input type="text" placeholder="Location" name="location">
+                                       <select>
+                                           <option value="Categroy">Categroy</option>
+                                           <option value="1">Hotel</option>
+                                           <option value="2">Restaurant</option>
+                                           <option value="3">Property</option>
+                                           <option value="4">Shopping</option>
+                                       </select>
+                                       <button type="submit">Search request</button>
+                                   </form>
+                               </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-section col-lg-6 col-sm-12 p-0">
+					<div id="map-holder">
+						<div class="mycontainer myfill">
+							<div id="map">
+								<div id="basemapslidercontainer">
+									<div id="basemapslider">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--
+                    <div class="slides listico-slider">
+                        <div class="single-slide">
+                           <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d58400.47931449054!2d90.40927917566997!3d23.817533751206252!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sBars!5e0!3m2!1sen!2sbd!4v1562019287484!5m2!1sen!2sbd"  style="border:0" allowfullscreen></iframe>
+                        </div>
+                        <div class="single-slide">
+                           <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d116765.49789143789!2d90.28748999112247!3d23.85691014031508!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sHotels!5e0!3m2!1sen!2sbd!4v1562018865814!5m2!1sen!2sbd"  style="border:0" allowfullscreen></iframe>
+                        </div>
+                        <div class="single-slide">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d5161.9500897305015!2d90.3667025947699!3d23.816824102524652!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sRestaurants!5e0!3m2!1sen!2sbd!4v1562019214497!5m2!1sen!2sbd"  style="border:0" allowfullscreen></iframe>
+                        </div>
+                        <div class="single-slide">
+                           <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d58400.47931449054!2d90.40927917566997!3d23.817533751206252!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sBars!5e0!3m2!1sen!2sbd!4v1562019287484!5m2!1sen!2sbd"  style="border:0" allowfullscreen></iframe>
+                        </div>
+                        <div class="single-slide">
+                           <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d116765.49789143789!2d90.28748999112247!3d23.85691014031508!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sHotels!5e0!3m2!1sen!2sbd!4v1562018865814!5m2!1sen!2sbd"  style="border:0" allowfullscreen></iframe>
+                        </div>
+                        <div class="single-slide">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d5161.9500897305015!2d90.3667025947699!3d23.816824102524652!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sRestaurants!5e0!3m2!1sen!2sbd!4v1562019214497!5m2!1sen!2sbd"  style="border:0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    -->
+                    <div id="tagList" class="slides slider-nav text-center">
+                        <div class="single-nav">
+                            <div id="tagN1" class="slide-icon">
+                                <span>Shopping</span>
+                                <img src="assets/img/shop.png" alt="listico">
+                                2 Listing
+                            </div>
+                        </div>
+                        <div class="single-nav">
+                            <div id="tagN2" class="slide-icon">
+                                <span>Shopping</span>
+                                <img src="assets/img/shop.png" alt="listico">
+                                2 Listing
+                            </div>
+                        </div>
+                        <div class="single-nav">
+                            <div id="tagN3" class="slide-icon">
+                                <span>Shopping</span>
+                                <img src="assets/img/shop.png" alt="listico">
+                                2 Listing
+                            </div>
+                        </div>
+                        <div class="single-nav">
+                            <div id="tagN4" class="slide-icon">
+                                <span>Shopping</span>
+                                <img src="assets/img/shop.png" alt="listico">
+                                2 Listing
+                            </div>
+                        </div>
+                        <div class="single-nav">
+                            <div id="tagN5" class="slide-icon">
+                                <span>Shopping</span>
+                                <img src="assets/img/shop.png" alt="listico">
+                                2 Listing
+                            </div>
+                        </div>
+                        <div class="single-nav">
+                            <div id="tagN6" class="slide-icon">
+                                <span>Shopping</span>
+                                <img src="assets/img/shop.png" alt="listico">
+                                2 Listing
+                            </div>
+                        </div>
+                        <div class="single-nav">
+                            <div id="tagN7" class="slide-icon">
+                                <span>Shopping</span>
+                                <img src="assets/img/shop.png" alt="listico">
+                                2 Listing
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div>
+    </section>
+    <!-- hero section end -->
+
+    <!-- Popular Categories carousel section start -->
+    <section class="popular-categories carousel-section section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div id="dish-preview" class="artifact-slide">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Popular Categories  carouselsection end -->
+    <!-- how it works section start -->
+    <section class="how-it-works bg-overlay section-padding bg-cover parallax-2" style="background-image: url('assets/img/how_work_bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-xl-12 text-center">
+                    <div class="section-title white-color">
+                        <h2>How It Works</h2>
+                        <span>Why Freatures selection of the best places around the world</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4 col-md-12 col-sm-12">
+                    <div class="single-how-works d-flex align-items-start">
+                        <div class="how-icon">
+                            <span>01</span>
+                            <img src="assets/img/kat.png" alt="listico">
+                        </div>
+                        <div class="how-works">
+                            <h3>Bed form & wood</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae officia libero inventore, eos quae.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-12 col-sm-12">
+                    <div class="single-how-works d-flex align-items-start">
+                        <div class="how-icon">
+                            <span>02</span>
+                            <img src="assets/img/exterior.png" alt="listico">
+                        </div>
+                        <div class="how-works">
+                            <h3>Apply to aparment</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae officia libero inventore, eos quae.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-12 col-sm-12">
+                    <div class="single-how-works d-flex align-items-start">
+                        <div class="how-icon">
+                            <span>03</span>
+                            <img src="assets/img/armchair.png" alt="listico">
+                        </div>
+                        <div class="how-works">
+                            <h3>Charge lots of chairs</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae officia libero inventore, eos quae.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- how it works section end -->
+
+
+    <!-- trending Categories section start -->
+    <section class="trending-section section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-xl-12 text-center">
+                    <div class="section-title">
+                        <h2>Trending Spaces</h2>
+                        <span>Why Freatures selection of the best places around the world</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4 col-md-6 col-lg-4 col-sm-12">
+                    <!-- single item box start -->
+                    <div class="single-popular-item">
+                        <div class="item-cover-image bg-cover" style="background-image: url('assets/img/house.jpg')">
+                            <div class="tags">
+                                <ul>
+                                    <li><a href="#">gust</a></li>
+                                    <li><a href="#">hotel, rent</a></li>
+                                </ul>
+                                <a href="#" class="btn-wishlist"><i class="far fa-heart"></i></a>
+                            </div>
+                            <div class="item-details">
+                                <div class="brand">
+                                    <img src="assets/img/avatar/2.jpg" alt="listico">
+                                    <span class="item-price">$920/hotel</span>
+                                </div>
+                                <div class="item-category">
+                                    <div class="cat-icon">
+                                        <img src="assets/img/exterior.png" alt="listico">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-content">
+                            <h4><a href="listing-single-details.html">Hotel Redison Five Star</a></h4>
+                            <div class="item-feedback">
+                                <ul>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                </ul>
+                                Great, (9 Reviwer)
+                            </div>
+                            <div class="item-store-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                 27th Brooklyn New York, NY 10065
+                            </div>
+                            <div class="item-meta-data open">
+                                <ul>
+                                    <li><i class="far fa-clock"></i><span>Open</span> until 8:00 AM</li>
+                                    <li>By<a href="#">admin</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single item box end -->
+                </div>
+                <div class="col-xl-4 col-md-6 col-lg-4 col-sm-12">
+                    <!-- single item box start -->
+                    <div class="single-popular-item">
+                        <div class="item-cover-image bg-cover" style="background-image: url('assets/img/mancook.png')">
+                            <div class="tags">
+                                <ul>
+                                    <li><a href="#">restourant</a></li>
+                                    <li><a href="#">shop, sale</a></li>
+                                </ul>
+                                <a href="#" class="btn-wishlist"><i class="far fa-heart"></i></a>
+                            </div>
+                            <div class="item-details">
+                                <div class="brand">
+                                    <img src="assets/img/avatar/3.jpg" alt="listico">
+                                    <span class="item-price">$80/restaurant</span>
+                                </div>
+                                <div class="item-category">
+                                    <div class="cat-icon">
+                                        <img src="assets/img/cafe.png" alt="listico">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-content">
+                            <h4><a href="listing-single-details.html">Restaurant De La Marne</a></h4>
+                            <div class="item-feedback">
+                                <ul>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                </ul>
+                                Good, (10 Reviwer)
+                            </div>
+                            <div class="item-store-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Dhaka, Mirpur 12 C-Block Road 20
+                            </div>
+                            <div class="item-meta-data open">
+                                <ul>
+                                    <li><i class="far fa-clock"></i><span>Open</span> until 10:00 AM</li>
+                                    <li>By<a href="#">admin</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single item box end -->
+                </div>
+                <div class="col-xl-4 col-md-6 col-lg-4 col-sm-12">
+                    <!-- single item box start -->
+                    <div class="single-popular-item">
+                        <div class="item-cover-image bg-cover" style="background-image: url('assets/img/hotel1.jpg')">
+                            <div class="tags">
+                                <ul>
+                                    <li><a href="#">hotel</a></li>
+                                    <li><a href="#">Guests House</a></li>
+                                </ul>
+                                <a href="#" class="btn-wishlist"><i class="far fa-heart"></i></a>
+                            </div>
+                            <div class="item-details">
+                                <div class="brand">
+                                    <img src="assets/img/avatar/author2.png" alt="listico">
+                                    <span class="item-price">$780/hotel</span>
+                                </div>
+                                <div class="item-category">
+                                    <div class="cat-icon">
+                                        <img src="assets/img/hotel.png" alt="listico">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-content">
+                            <h4><a href="listing-single-details.html">VVIP Awesome Guests House</a></h4>
+                            <div class="item-feedback">
+                                <ul>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                </ul>
+                                Average, (2 Reviwer)
+                            </div>
+                            <div class="item-store-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                7567 Ground Moorabool, Upper East Side
+                            </div>
+                            <div class="item-meta-data open">
+                                <ul>
+                                    <li><i class="far fa-clock"></i><span>Open</span> until 10:00 AM</li>
+                                    <li>By<a href="#">admin</a></li>
+                                      
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single item box end -->
+                </div>
+                <div class="col-xl-4 col-md-6 col-lg-4 col-sm-12">
+                    <!-- single item box start -->
+                    <div class="single-popular-item">
+                        <div class="item-cover-image bg-cover" style="background-image: url('assets/img/resto.jpg')">
+                            <div class="tags">
+                                <ul>
+                                    <li><a href="#">Restourant</a></li>
+                                    <li><a href="#">sale, food</a></li>
+                                </ul>
+                                <a href="#" class="btn-wishlist"><i class="far fa-heart"></i></a>
+                            </div>
+                            <div class="item-details">
+                                <div class="brand">
+                                    <img src="assets/img/avatar/5.jpg" alt="listico">
+                                    <span class="item-price">$620/restourant</span>
+                                </div>
+                                <div class="item-category">
+                                    <div class="cat-icon">
+                                        <img src="assets/img/hotel.png" alt="listico">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-content">
+                            <h4><a href="listing-single-details.html">Luxury Restourant</a></h4>
+                            <div class="item-feedback">
+                                <ul>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                </ul>
+                                Great, (9 Reviwer)
+                            </div>
+                            <div class="item-store-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                 Dhaka, Mirpur 12 C-Block Road 20
+                            </div>
+                            <div class="item-meta-data open">
+                                <ul>
+                                    <li><i class="far fa-clock"></i><span>Open</span> until 8:00 AM</li>
+                                    <li>By<a href="#">admin</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single item box end -->
+                </div>
+                <div class="col-xl-4 col-md-6 col-lg-4 col-sm-12">
+                    <!-- single item box start -->
+                    <div class="single-popular-item">
+                        <div class="item-cover-image bg-cover" style="background-image: url('assets/img/gust.jpg')">
+                            <div class="tags">
+                                <ul>
+                                    <li><a href="#">rent</a></li>
+                                    <li><a href="#">hotel</a></li>
+                                </ul>
+                                <a href="#" class="btn-wishlist"><i class="far fa-heart"></i></a>
+                            </div>
+                            <div class="item-details">
+                                <div class="brand">
+                                    <img src="assets/img/avatar/2.jpg" alt="listico">
+                                    <span class="item-price">$280/gusthouse</span>
+                                </div>
+                                <div class="item-category">
+                                    <div class="cat-icon">
+                                        <img src="assets/img/exterior.png" alt="listico">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-content">
+                            <h4><a href="listing-single-details.html">Beautiful City Hostel & Hotel</a></h4>
+                            <div class="item-feedback">
+                                <ul>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                </ul>
+                                Average, (10 Reviwer)
+                            </div>
+                            <div class="item-store-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                7567 Ground Moorabool, Upper East Side
+                            </div>
+                            <div class="item-meta-data open">
+                                <ul>
+                                    <li><i class="far fa-clock"></i><span>Open</span> until 10:00 AM</li>
+                                    <li>By<a href="#">admin</a></li>
+                                      
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single item box end -->
+                </div>
+                <div class="col-xl-4 col-md-6 col-lg-4 col-sm-12">
+                    <!-- single item box start -->
+                    <div class="single-popular-item">
+                        <div class="item-cover-image bg-cover" style="background-image: url('assets/img/mans.jpg')">
+                            <div class="tags">
+                                <ul>
+                                    <li><a href="#">Rent</a></li>
+                                    <li><a href="#">Hotel, Travel</a></li>
+                                </ul>
+                                <a href="#" class="btn-wishlist"><i class="far fa-heart"></i></a>
+                            </div>
+                            <div class="item-details">
+                                <div class="brand">
+                                    <img src="assets/img/avatar/author.png" alt="listico">
+                                    <span class="item-price">$380/medical</span>
+                                </div>
+                                <div class="item-category">
+                                    <div class="cat-icon">
+                                        <img src="assets/img/hotel.png" alt="listico">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-content">
+                            <h4><a href="listing-single-details.html">Apricot West Britford Arch</a></h4>
+                            <div class="item-feedback">
+                                <ul>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                    <li><i class="fas fa-star"></i></li>
+                                </ul>
+                                Average, (6Reviwer)
+                            </div>
+                            <div class="item-store-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                 27th Brooklyn New York, NY 10065
+                            </div>
+                            <div class="item-meta-data open">
+                                <ul>
+                                    <li><i class="far fa-clock"></i><span>Open</span> until 10:00 AM</li>
+                                    <li>By<a href="#">admin</a></li>
+                                      
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single item box end -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- trending Categories section end -->
+
+    <!-- happy client testimonial section start -->
+    <section class="testimonial-section bg-overlay section-padding bg-cover parallax" style="background-image: url('assets/img/testimonial_bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-xl-12 text-center">
+                    <div class="section-title white-color">
+                        <h2>Happy Client</h2>
+                        <span>Why you chose us for the best places around the world</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- happy client testimonial section end -->
+
+    <!-- Top Event  section start -->
+    <section class="top-event-section section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-xl-12 text-center">
+                    <div class="section-title">
+                        <h2>Top Events</h2>
+                        <span>Why Freatures selection of the best places around the world</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Top Event  section end -->
+
+    <!-- promo section start -->
+    <section class="promo-section parallax section-padding bg-cover bg-overlay" style="background-image: url('assets/img/promo-bg.jpg')">
+        <div class="container">
+            <div class="row d-flex align-items-center">
+                <div class="col-xl-7 col-sm-12 col-md-7">
+                    <div class="promo-content">
+                        <h1>Visit the Best Cafes House <br>Restaurants & Bars </h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore</p>
+                        <a href="#" class="btn-promo">Visit Site</a>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-md-5 col-sm-12 mobile-none">
+                    <div class="promo-img">
+                        <img src="assets/img/promo-man.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- promo section end -->
+
+    <!-- populer location section start -->
+    <section class="top-location-section section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-xl-12 text-center">
+                    <div class="section-title">
+                        <h2>Popular Location</h2>
+                        <span>Why Freatures selection of the best places around the world</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- populer location section end -->
+
+    <!-- call to action section start -->
+    <section class="call-to-action-wrap bg-cover" style="background-image: url('assets/img/call-to-action-bg.jpg')">
+        <div class="container">
+            <div class="row d-flex align-items-center">
+                <div class="col-xl-8 col-sm-12  col-md-7">
+                    <div class="call-to-action">
+                        <h2>Join Our Amazing Community</h2>
+                        <span>Consectetur adipisicing elit, sed do eiusmod tempor</span>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-sm-12 col-md-5 text-lg-right">
+                    <a href="#" class="call-action-btn"><i class="far fa-check-circle"></i>Contact Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- call to action section end -->
+
+
+    <!-- footer section wrapper start -->
+    <footer class="footer-section">
+        <div class="footer-widgets-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 col-lg-3 col-sm-12">
+                        <div class="single-footer-widget">
+                            <div class="widget-title">
+                                <h4>About US</h4>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, sectetur adipisicing elit, sed do eiusmod mpor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, uis nostrud exercitation</p>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 col-lg-3 col-sm-12">
+                        <div class="single-footer-widget">
+                            <div class="widget-title">
+                                <h4>Address</h4>
+                            </div>
+                            <p><strong>REALITY PROPERTY</strong>
+                                142 West newton, NY 19088 <br>
+                                <strong>United States</strong>
+                                +101 (235) 222 3353
+                                info@psdexpert.com</p>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 col-lg-3 col-sm-12">
+                        <div class="single-footer-widget">
+                            <div class="widget-title">
+                                <h4>Categories</h4>
+                            </div>
+                            <div class="widget-cats row">
+                                <ul class="col-12 col-lg-6">
+                                    <li><a href="#">Reviews</a></li>
+                                    <li><a href="#">Bookmark</a></li>
+                                    <li><a href="#">Bookings</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                    <li><a href="#">Shopping</a></li>
+                                    <li><a href="#">My Profile</a></li>
+                                </ul>
+                                <ul class="col-12 col-lg-6">
+                                    <li><a href="#">Restaurant</a></li>
+                                    <li><a href="#">Cafe & Bar</a></li>
+                                    <li><a href="#">Hotel</a></li>
+                                    <li><a href="#">My Listings</a></li>
+                                    <li><a href="#">add Listings</a></li>
+                                    <li><a href="#">Spa & Beauty</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 col-lg-3 col-sm-12">
+                        <div class="single-footer-widget">
+                            <div class="widget-title">
+                                <h4>Subscribe</h4>
+                            </div>
+                            <div class="subscribe-box">
+                                <form action="#">
+                                    <input type="text" placeholder="Email address">
+                                    <button type="submit">send</button>
+                                </form>
+                            </div>
+                            <div class="social-icons">
+                                <span>Follow us</span>
+                                <ul>
+                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-sm-12">
+                        <span>&copy;2019 rights reserved - Designed and Developed by ModinaTheme</span>
+                    </div>
+                    <div class="col-xl-6 col-sm-12">
+                        <div class="footer-menu">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">Listings</a></li>
+                                <li><a href="#">Help</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer section wrapper end -->
+
+
+
+    <!--  ALl JS Plugins
+    ====================================== -->
+    <script src="assets/js/jquery-1.12.4.min.js"></script>
+    <script src="assets/js/jquery.easing.1.3.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/scrollUp.min.js"></script>
+    <script src="assets/js/magnific-popup.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+	<script type="text/javascript" src="slick/slick.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+		  $('#dish-preview').slick({
+			rows: 2,
+			infinite: true,
+			arrows: false,
+			dots: true,
+			slidesToShow: 4,
+			slidesToScroll: 1
+		  });
+		});
+	</script>
+    <script src="assets/js/ion.rangeSlider.min.js"></script>
+    <script src="assets/js/rater.min.js"></script>
+    <script src="assets/js/meanmenu.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
