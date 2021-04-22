@@ -68,9 +68,9 @@
 {
     font-family: 'slick';
     font-size: 20px;
-
     opacity: .75;
     color: white;
+    line-height: 2;
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

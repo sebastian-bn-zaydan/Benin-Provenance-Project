@@ -117,20 +117,17 @@
 			  opacity: 0.8;
 			  border: 1px solid #d34751`
 			
-			//var rainbow = new Rainbow(); 
-			//rainbow.setNumberRange(1,5);
-			//rainbow.setSpectrum('#fdaf6f', '#adc25d');
-			var tagsNum = 1;
-			function addtags(tag){
-				if (tagsNum<8) {
-					var tagId = "tagN"+tagsNum;
-					var newTag = document.getElementById(tagId)
-					newTag.getElementsByTagName('span')[0].innerHTML = tag;
-					tagsNum += 1;
-				}
-				//newTag.setAttribute('onclick', 'MyFunction(\"'+tag+'\");');
+			function addtags(tag,count){
+				var newTag = document.createElement("div");
+				newTag.classList.add("single-nav");
+				var newIcon = document.createElement("div");
+				newIcon.classList.add("slide-icon");
+				newIcon.innerHTML = `<span>${tag}</span><img class="gray" src="assets/logos/${tag}.png" width="44px" onError="this.onerror=null;this.src='assets/img/shop.png';" />${count} Artifacts`;
+				newTag.appendChild(newIcon);
+				//document.getElementById("tagList").appendChild(newTag);
+				$('#tagList').slick('slickAdd',newTag);
 			}
-			var tag_lst = new Set();
+			var tag_lst = {};
 			var mapboxAccessToken = 'pk.eyJ1IjoicGRrZmp6IiwiYSI6ImNramQ2bDY0MTExaHMydnFxdDgxMDUwNnoifQ.BsWJfll89GgrBCqGorqegw';
 			var map = L.map('map').setView([40, -20], 2);
 			markersLayer = new L.FeatureGroup();
@@ -156,6 +153,8 @@
 						var featureGeo = "./data/"+feature.properties.item+".geojson";
 						console.log(featureGeo);
 						markersLayer.clearLayers();
+						ProvData = document.getElementById("ProvData");
+						ProvData = innerHTML = '';
 						$.getJSON(featureGeo,function(data){
 							myL2 = L.geoJson(data,{
 								pointToLayer: function(feature,latlng){
@@ -168,6 +167,10 @@
 										className: "item-custom-pin"
 									});
 									console.log('here!!');
+									ProvData = document.getElementById("ProvData");
+									var ProvCell = document.createElement("li");
+									ProvCell.textContent = feature.properties.provenance;
+									ProvData.appendChild(ProvCell);
 									var marker = L.marker(latlng,{icon: thisIcon});
 									marker.bindPopup('<font size="+2">'+feature.properties.yearStr+'</font>'+'<br/>'+feature.properties.provenance);
 									return marker;
@@ -198,7 +201,7 @@
 					//	tag.innerHTML = `<a href="#" onclick="MyFunction('${feature.properties.tags[ii]}');">${feature.properties.tags[ii]}</a>`;
 					//	tagsTable.appendChild(tag);
 					//}
-					tag_lst.add(feature.properties.institution);
+					tag_lst[feature.properties.institution] = (tag_lst[feature.properties.institution] || 0) + 1;
 					var tag = document.createElement("li");
 					tag.innerHTML = `<a href="#" onclick="MyFunction('${feature.properties.institution}');">${feature.properties.institution}</a>`;
 					tagsTable.appendChild(tag);
@@ -264,17 +267,19 @@
 					return marker;
 			   }
 			   }).addTo(map);
-			   tag_lst.forEach(addtags);
+			   //tag_lst.forEach(addtags);
+			   for (var key in tag_lst){
+				   addtags(key,tag_lst[key]);
+			   }
 			});
 		})
 	</script>
 	<script>		  
 	function MyFunction(val) {
-		//console.log(markersLayer);
 		markersLayer.clearLayers();
 		Object.keys(myL._layers).forEach(function(key){
 			layer = myL._layers[key];
-			if (layer.feature.properties.tags.includes(val)) {
+			if (layer.feature.properties.institution == val) {
 				document.getElementById(layer.feature.properties.name+'_pin').style.backgroundColor = "#6699ff";
 			} else {
 				document.getElementById(layer.feature.properties.name+'_pin').style.backgroundColor = "#fdaf6f";
@@ -377,7 +382,7 @@
     <section class="hero-section welcome-section">
         <div class="container-fluid m-lg-0 p-lg-0">
             <div class="row">
-                <div class="search-section d-flex col-lg-5 col-sm-12 p-0 bg-cover" style="background-image: url('assets/img/search-bg.jpg')">
+                <div class="search-section d-flex col-lg-5 col-sm-12 p-0 bg-cover" style="background-image: url('assets/img/Drawing_of_Benin_City_made_by_an_English_officer_1897.jpg')">
                     <div class="search-tab-wrap">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs">
@@ -393,25 +398,12 @@
                            <div class="tab-pane active container" id="place">
                                <div class="search-form-box">
                                    <h3 id="ArtifactName"> The Edo Provenance Project</h3>
-                                   <p>Institutions: MFA.</p>
-                                   <!--
-                                   <form action="#" class="search-form">
-                                       <input type="text" placeholder="Where to go?" name="place">
-                                       <input type="text" placeholder="Location" name="location">
-                                       <select>
-                                           <option value="Categroy">Categroy</option>
-                                           <option value="1">Hotel</option>
-                                           <option value="2">Restaurant</option>
-                                           <option value="3">Property</option>
-                                           <option value="4">Shopping</option>
-                                       </select>
-                                       <button type="submit">Search request</button>
-                                   </form>
-                                   -->
+                                   <p>Institution: MFA.</p>
                                    <img id="artifactImg" class="img-fluid" src="./assets/img/beninBronze.png" width="250" onerror="this.style.display=\'none\'"/>
                                </div>
                            </div>
                            <div class="tab-pane container" id="event">
+							   <!--
                                 <div class="search-form-box">
                                    <h3>Discover Great Event.</h3>
                                    <p>Tag: Nightlife, Hotel, Restaurant, Sport, Shop.</p>
@@ -428,6 +420,11 @@
                                        <button type="submit">Search request</button>
                                    </form>
                                </div>
+                               -->
+							   <h3 id="ArtifactName2"> The Edo Provenance Project</h3>
+							   <p>Institution: MFA.</p>
+							   <ul id="ProvData">
+							   </ul>                             
                            </div>
                         </div>
                     </div>
@@ -466,6 +463,7 @@
                     </div>
                     -->
                     <div id="tagList" class="slides slider-nav text-center">
+						<!--
                         <div class="single-nav">
                             <div id="tagN1" class="slide-icon">
                                 <span>Shopping</span>
@@ -515,6 +513,7 @@
                                 2 Listing
                             </div>
                         </div>
+                        -->
                     </div>
                 </div>
             </div>
@@ -535,7 +534,7 @@
     </section>
     <!-- Popular Categories  carouselsection end -->
     <!-- how it works section start -->
-    <section class="how-it-works bg-overlay section-padding bg-cover parallax-2" style="background-image: url('assets/img/how_work_bg.jpg')">
+    <section class="how-it-works bg-overlay section-padding bg-cover parallax-2" style="background-image: url('assets/img/Drawing_of_Benin_City_made_by_an_English_officer_1897.jpg')">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-xl-12 text-center">
@@ -1108,6 +1107,13 @@
 			infinite: true,
 			arrows: false,
 			dots: true,
+			slidesToShow: 4,
+			slidesToScroll: 2
+		  });
+		  $('#tagList').slick({
+			infinite: true,
+			arrows: true,
+			dots: false,
 			slidesToShow: 4,
 			slidesToScroll: 1
 		  });

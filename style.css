@@ -75,7 +75,7 @@ input::-webkit-focus-inner {
 ul {
   padding: 0;
   margin: 0;
-  list-style-type: none;
+  list-style-type: lower-roman;
 }
 a:hover {
   text-decoration: none;
@@ -514,7 +514,7 @@ ul.nav.nav-tabs li a.active {
     color: #fff;
 }
 .slick-current .slide-icon img {
-    filter: brightness(900%);
+    filter: grayscale(100%);
 }
 .slick-next {
     right: 40px;
