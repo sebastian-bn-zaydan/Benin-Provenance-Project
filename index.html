@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- ======== Page title ============ -->
-    <title>Listico - Listing & Directory HTML Template</title>
+    <title>The Edo Provenance Project</title>
     
     <!-- ========== Favicon Icon ========== -->
     <link rel="shortcut icon" href="assets/img/favicon.png">
@@ -160,7 +160,7 @@
 						console.log(featureGeo);
 						markersLayer.clearLayers();
 						ProvData = document.getElementById("ProvData");
-						ProvData = innerHTML = '';
+						ProvData.innerHTML = '';
 						$.getJSON(featureGeo,function(data){
 							myL2 = L.geoJson(data,{
 								pointToLayer: function(feature,latlng){
@@ -766,7 +766,7 @@
         <div class="footer-widgets-section">
             <div class="container">
                 <div class="row">
-                    <div class="col-xl-4 col-md-6 col-lg-3 col-sm-12">
+                    <div class="col-xl-6 col-md-6 col-lg-3 col-sm-12">
                         <div class="single-footer-widget">
                             <div class="widget-title">
                                 <h4>About</h4>
@@ -777,24 +777,28 @@
                         </div>
                     </div>
 
-                    <div class="col-xl-4 col-md-6 col-lg-3 col-sm-12">
+                    <div class="col-xl-3 col-md-6 col-lg-3 col-sm-12">
                         <div class="single-footer-widget">
                             <div class="widget-title">
                                 <h4>Contributor</h4>
                             </div>
-                            <p><a href="#" style="color:#dc2426;">
-									<strong><i class="fas fa-user"></i> Sebastian Bn-Zaydan</strong>
+                            <p><a href="https://github.com/sebastian-bn-zaydan" style="color:#dc2426;">
+									<strong><i class="fab fa-github"></i> Sebastian Bn-Zaydan</strong>
                                 </a>
+                            <!--
                             <div class="social-icons">
                                 <span>Follow Me</span>
                                 <ul>
                                     <li><a href="https://github.com/sebastian-bn-zaydan"><i class="fab fa-github"></i></a></li>
                                 </ul>
-                            </div></p>
+                            </div>
+                            -->
+                            Engineer and a digital humanist in training from Palestine. Interested in natural language processing for social good.
+                            </p>
                         </div>
                     </div>
 
-                    <div class="col-xl-4 col-md-6 col-lg-3 col-sm-12">
+                    <div class="col-xl-3 col-md-6 col-lg-3 col-sm-12">
                         <div class="single-footer-widget">
                             <div class="widget-title">
                                 <h4>Public Institutions With Artifacts</h4>
