@@ -86,6 +86,13 @@
 		}
 	</style>
 	<script>
+		// Before map is being initialized.
+		var mapsPlaceholder = [];
+		L.Map.addInitHook(function () {
+		  mapsPlaceholder.push(this); // Use whatever global scope variable you like.
+		});
+	</script>
+	<script>
 		$(document).ready(function () {
 						  
 			$('#basemapslider').mousedown(function(){
@@ -132,7 +139,39 @@
 				newTag.appendChild(newIcon);
 				//document.getElementById("tagList").appendChild(newTag);
 				$('#tagList').slick('slickAdd',newTag);
-			}
+			};
+			
+			function mapOnclick(name,item,img_url){
+				name,item,img_url
+				document.getElementById("ArtifactName").innerText = name;
+				document.getElementById("artifactImg").src = img_url;
+				//console.log(feature.properties.item)
+				var featureGeo = "./data/"+item+".geojson";
+				//console.log(featureGeo);
+				markersLayer.clearLayers();
+				ProvData = document.getElementById("ProvData");
+				ProvData.innerHTML = '';
+				$.getJSON(featureGeo,function(data){
+					myL2 = L.geoJson(data,{
+						pointToLayer: function(feature,latlng){
+							var thisIcon = L.icon({
+								iconUrl: 'assets/img/flag.png',
+								iconSize:     [26, 26], // size of the icon
+								popupAnchor:  [0, 0], // point from which the popup should open relative to the iconAnchor
+								className: "item-custom-pin"
+							});
+							ProvData = document.getElementById("ProvData");
+							var ProvCell = document.createElement("li");
+							ProvCell.textContent = feature.properties.provenance;
+							ProvData.appendChild(ProvCell);
+							var marker = L.marker(latlng,{icon: thisIcon});
+							marker.bindPopup('<font size="+2">'+feature.properties.yearStr+'</font>'+'<br/>'+feature.properties.provenance);
+							return marker;
+						}
+					}).addTo(markersLayer);
+				})
+				map.addLayer(markersLayer);
+			};
 			var tag_lst = {};
 			var mapboxAccessToken = 'pk.eyJ1IjoicGRrZmp6IiwiYSI6ImNramQ2bDY0MTExaHMydnFxdDgxMDUwNnoifQ.BsWJfll89GgrBCqGorqegw';
 			var map = L.map('map').setView([40, -20], 2);
@@ -146,45 +185,12 @@
 		    }).addTo(map);
 			var inCurrSlide = 0;
 			var currSlide = '';
-			console.log('here')
+			console.log('here');
 		    $.getJSON("./data/all.geojson",function(data){
 				document.getElementById("tagAll").textContent = data.features.length+ " Artifacts";
 				myL= L.geoJson(data,{
 				  onEachFeature: function onEachFeature(feature,layer){
-					layer.on('click', function (e) {
-						document.getElementById("ArtifactName").innerText = feature.properties.name;
-						document.getElementById("artifactImg").src = feature.properties.img_url;
-						console.log('here!!')
-						console.log(feature.properties.item)
-						var featureGeo = "./data/"+feature.properties.item+".geojson";
-						console.log(featureGeo);
-						markersLayer.clearLayers();
-						ProvData = document.getElementById("ProvData");
-						ProvData.innerHTML = '';
-						$.getJSON(featureGeo,function(data){
-							myL2 = L.geoJson(data,{
-								pointToLayer: function(feature,latlng){
-									console.log('here!');
-									var thisIcon = L.icon({
-										//html: `<span id="${feature.properties.AlternativeName+'_pin'}" style="${markerHtmlStyles}; background-color:#9999ff;" />`,
-										iconUrl: 'assets/img/flag.png',
-										iconSize:     [26, 26], // size of the icon
-										popupAnchor:  [0, 0], // point from which the popup should open relative to the iconAnchor
-										className: "item-custom-pin"
-									});
-									console.log('here!!');
-									ProvData = document.getElementById("ProvData");
-									var ProvCell = document.createElement("li");
-									ProvCell.textContent = feature.properties.provenance;
-									ProvData.appendChild(ProvCell);
-									var marker = L.marker(latlng,{icon: thisIcon});
-									marker.bindPopup('<font size="+2">'+feature.properties.yearStr+'</font>'+'<br/>'+feature.properties.provenance);
-									return marker;
-								}
-							}).addTo(markersLayer);
-						})
-						map.addLayer(markersLayer);
-					})
+					layer.on('click', function (e) {mapOnclick(feature.properties.name,feature.properties.item,feature.properties.img_url)})
 			      },
 				pointToLayer: function(feature,latlng){
 					// Code to bind the features to their preview
@@ -221,7 +227,7 @@
 					singlePopularItem.appendChild(itemCategory);
 					var itemContent = document.createElement("div");
 					itemContent.className="item-content";
-					itemContent.innerHTML = `<div style="height: 100px;"><h5><a href="listing-single-details.html">`+feature.properties.name
+					itemContent.innerHTML = `<div style="height: 100px;"><h5><a id="imgPreview${preview_counter}" href="#" onclick="bindPreview('${feature.properties.name}','${feature.properties.item}','${feature.properties.img_url}')">`+feature.properties.name
 						+`</a></h5></div>
 						    <div class="item-feedback">
                                 <ul>
@@ -259,6 +265,9 @@
 						className: "my-custom-pin"
 					});
 					var marker = L.marker(latlng,{icon: thisIcon});
+					marker.name = feature.properties.name;
+					marker.item = feature.properties.item;
+					marker.img_url = feature.properties.img_url;
 					<!--
 					marker.bindPopup('<font size="+2">'+feature.properties.name+'</font>'+'<br/><img src="'+feature.properties.image_url+'" width="250" onerror="this.style.display=\'none\'"/>');
 					-->
@@ -271,7 +280,6 @@
 					return marker;
 			   }
 			   }).addTo(map);
-			   //tag_lst.forEach(addtags);
 			   for (var key in tag_lst){
 				   addtags(key,tag_lst[key]);
 			   }
@@ -284,12 +292,49 @@
 		Object.keys(myL._layers).forEach(function(key){
 			layer = myL._layers[key];
 			if (layer.feature.properties.institution == val) {
+				console.log(myL._layers)
+				console.log('that was key')
 				document.getElementById(layer.feature.properties.name+'_pin').style.backgroundColor = "#6699ff";
 			} else {
 				document.getElementById(layer.feature.properties.name+'_pin').style.backgroundColor = "#fdaf6f";
 			}
 		})
 	}
+	</script>
+	<script>
+	function bindPreview(name,item,img_url){
+		console.log(name,item,img_url);
+		document.getElementById("ArtifactName").innerText = name;
+		document.getElementById("artifactImg").src = img_url;
+		//console.log(feature.properties.item)
+		var featureGeo = "./data/"+item+".geojson";
+		//console.log(featureGeo);
+		markersLayer.clearLayers();
+		ProvData = document.getElementById("ProvData");
+		ProvData.innerHTML = '';
+		$.getJSON(featureGeo,function(data){
+			myL2 = L.geoJson(data,{
+				pointToLayer: function(feature,latlng){
+					var thisIcon = L.icon({
+						iconUrl: 'assets/img/flag.png',
+						iconSize:     [26, 26], // size of the icon
+						popupAnchor:  [0, 0], // point from which the popup should open relative to the iconAnchor
+						className: "item-custom-pin"
+					});
+					ProvData = document.getElementById("ProvData");
+					var ProvCell = document.createElement("li");
+					ProvCell.textContent = feature.properties.provenance;
+					ProvData.appendChild(ProvCell);
+					var marker = L.marker(latlng,{icon: thisIcon});
+					marker.bindPopup('<font size="+2">'+feature.properties.yearStr+'</font>'+'<br/>'+feature.properties.provenance);
+					return marker;
+				}
+			}).addTo(markersLayer);
+		})
+		map = document.getElementById("map");
+		console.log(map);
+		mapsPlaceholder[0].addLayer(markersLayer);
+	};
 	</script>
 </head>
 
