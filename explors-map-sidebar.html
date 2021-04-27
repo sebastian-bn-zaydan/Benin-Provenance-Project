@@ -35,7 +35,6 @@
     <link rel="stylesheet" href="style.css">
     <!-- template responsive css stylesheet -->
     <link rel="stylesheet" href="assets/css/responsive.css">
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -46,6 +45,7 @@
 	<meta http-equiv="imagetoolbar" content="no">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="stylesheet" href="assets/css/leaflet-search.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css">
 	<link rel="stylesheet" href="https://cdn.rawgit.com/ardhi/Leaflet.MousePosition/master/src/L.Control.MousePosition.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -55,6 +55,7 @@
 	<script src="./js/leaflet_awesome_number_markers.js"></script>
 	<script src="./js/greyscale.js"></script>
 	<script src="./js/rainbowvis.js"></script>
+	<script src="./js/leaflet-search.js"></script>
 	<style type="text/css">
 		#basemapslidercontainer {
 		  position: absolute;
@@ -209,6 +210,9 @@
 			var inCurrSlide = 0;
 			var currSlide = '';
 		    $.getJSON("./data/all.geojson",function(data){
+				style:  {
+					color: 'red';
+				}			
 				myL= L.geoJson(data,{
 				  onEachFeature: function onEachFeature(feature,layer){
 					layer.on('click', function (e) {mapOnclick(feature.properties.name,feature.properties.item,feature.properties.img_url)})
@@ -235,7 +239,36 @@
 					});
 					return marker;
 			   }
-			   }).addTo(map);
+			   }).addTo(itemMarkers);
+			   map.addLayer(itemMarkers);
+			   console.log(myL)
+				var searchControl = new L.Control.Search({
+				layer: myL,
+				propertyName: 'name',
+				marker: false,
+				moveToLocation: function(latlng, title, map) {
+					//map.fitBounds( latlng.layer.getBounds() );
+					//var zoom = map.getBoundsZoom(latlng.layer.getBounds());
+					//map.setView(latlng, zoom); // access the zoom
+					}
+				});
+
+				searchControl.on('search:locationfound', function(e) {
+					//console.log('search:locationfound', );
+					//map.removeLayer(this._markerSearch)
+					//e.layer.setStyle({fillColor: '#3f0', color: '#0f0'});
+					document.getElementById(e.layer.feature.properties.name+'_pin').style.backgroundColor = "#6699ff";
+					if(e.layer._popup)
+						e.layer.openPopup();
+				}).on('search:collapsed', function(e) {
+					 myL.eachLayer(function(layer) {	//restore feature color
+						 //myL.resetStyle(layer);
+						 document.getElementById(layer.feature.properties.name+'_pin').style.backgroundColor = "#fdaf6f";
+					});	
+				});
+			   map.addControl( searchControl );  //inizialize search control
+			   museums = Array.from(museums)
+			   museums.unshift("All");
 			   for (const museum of museums) {
 				   var checkbox = document.createElement("div");
 				   checkbox.classList.add("check-box");
@@ -312,12 +345,14 @@
 				if (typeof layer.feature === 'undefined') {
 					return
 				}
-				//console.log(layer.feature);
+				if (vals.includes("All")) {
+					document.getElementById(layer.feature.properties.name+'_pin').style.backgroundColor = "#fdaf6f";
+					return
+				}
 				if (vals.includes(layer.feature.properties.institution)) {
-					layer._icon.style.display = 'none';
+					document.getElementById(layer.feature.properties.name+'_pin').style.backgroundColor = "#6699ff";
 				} else {
-					layer._icon.style.display = '';
-					.toggle('slow')
+					document.getElementById(layer.feature.properties.name+'_pin').style.backgroundColor = "#fdaf6f";
 				}
 			});
 		}
@@ -371,7 +406,7 @@
                     <div class="col-md-9 d-none d-lg-block text-lg-right">
                         <nav id="responsive-menu" class="main-menu">
                             <ul class="menu-items">
-                                <li><a href="#">map</a>
+                                <li><a href="./index.html">map</a>
 									<!--
                                     <ul class="submenu">
                                         <li><a href="index.html">Home One</a></li>
@@ -416,16 +451,18 @@
     <section class="section-padding pt-0">
         <div class="container-fluid m-0 p-0">
             <div class="row">
-                <div class="col-lg-4 col-xl-3 col-sm-12 col-md-6">
+                <div class="col-lg-4 col-xl-3 col-sm-12 col-md-6 mx-auto">
                     <div>
                         <div>
-                            <h4>What are you looking for?</h4>
+                            <h4 style="text-align:center;">What are you looking for?</h4>
                             <!--
                             <!--
                             <span>Search or select categories</span>
                             <!-- advance form started  class="advance-search-form" -->
-                            <form style="width:80%;position:relative;">
+                            <form style="width:80%;text-align:center;margin: 0 auto;">
+								<!--
                                 <input type="text" placeholder="What are you looking for?">
+                                -->
                                 <select id="keywords-search">
                                     <option value="0">All Artifacts</option>
                                     <!--
@@ -463,7 +500,7 @@
                                     <option value="2">Central Europ</option>
                                     <option value="3">Britain</option>
                                 </select>
-                                <button type="button" class="btn btn-secondary" onclick="filterMap()">Search Now</button>
+                                <button type="button" class="btn-search" onclick="filterMap()">Search Now</button>
                             </form>
                             <!-- advance form end -->
                         </div>
