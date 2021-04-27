@@ -144,6 +144,7 @@
 			function mapOnclick(name,item,img_url){
 				name,item,img_url
 				document.getElementById("ArtifactName").innerText = name;
+				document.getElementById("ArtifactName2").innerText = name;
 				document.getElementById("artifactImg").src = img_url;
 				//console.log(feature.properties.item)
 				var featureGeo = "./data/"+item+".geojson";
@@ -217,7 +218,6 @@
 					var tag = document.createElement("li");
 					tag.innerHTML = `<a href="#" onclick="MyFunction('${feature.properties.institution}');">${feature.properties.institution}</a>`;
 					tagsTable.appendChild(tag);
-					//tagsDiv.innerHTML = `<a href="#" class="btn-wishlist"><i class="far fa-heart"></i></a>`;
 					tagsDiv.appendChild(tagsTable);
 					itemCoverImage.appendChild(tagsDiv);
 					singlePopularItem.appendChild(itemCoverImage);
@@ -227,8 +227,9 @@
 					singlePopularItem.appendChild(itemCategory);
 					var itemContent = document.createElement("div");
 					itemContent.className="item-content";
-					itemContent.innerHTML = `<div style="height: 100px;"><h5><a id="imgPreview${preview_counter}" href="#" onclick="bindPreview('${feature.properties.name}','${feature.properties.item}','${feature.properties.img_url}')">`+feature.properties.name
+					itemContent.innerHTML = `<div style="height: 100px;"><h5><a href="#" onclick="bindPreview('${feature.properties.name}','${feature.properties.item}','${feature.properties.img_url}')">`+feature.properties.name
 						+`</a></h5></div>
+							<div style="height: 60px;"><a href="${feature.properties.item_link}">${feature.properties.institution} Page</a></div>
 						    <div class="item-feedback">
                                 <ul>
                                     <li><i class="fas fa-tag"></i></li>
@@ -279,12 +280,12 @@
 					});
 					return marker;
 			   }
-			   }).addTo(map);
-			   for (var key in tag_lst){
-				   addtags(key,tag_lst[key]);
-			   }
-			});
-		})
+		   }).addTo(map);
+		   for (var key in tag_lst){
+			   addtags(key,tag_lst[key]);
+		   }
+		});
+	})
 	</script>
 	<script>		  
 	function MyFunction(val) {
@@ -439,9 +440,6 @@
                               <a class="nav-link active" data-toggle="tab" href="#place">Artifact</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" data-toggle="tab" href="#aboutArtifcat">About</a>
-                           </li>
-                           <li class="nav-item">
                               <a class="nav-link" data-toggle="tab" href="#event">Provenance</a>
                            </li>
                         </ul>
@@ -450,14 +448,13 @@
                            <div class="tab-pane active container" id="place">
                                <div class="search-form-box">
                                    <h3 id="ArtifactName"> The Edo Provenance Project</h3>
-                                   <p>Institution: MFA.</p>
-                                   <img id="artifactImg" class="img-fluid" src="./assets/img/beninBronze.png" width="250" onerror="this.style.display=\'none\'"/>
+                                   <p>Looted objects from the Benin Punative Raid, 1897</p>
+                                   <img id="artifactImg" class="img-fluid" src="./assets/img/Looted_objects_from_the_Benin_Punative_Raid_1897.jpg" width="250" onerror="this.style.display=\'none\'"/>
                                </div>
                            </div>
                            <div class="tab-pane container" id="aboutArtifcat">
                                <div class="search-form-box">
                                    <h3 id="ArtifactName"> The Edo Provenance Project</h3>
-                                   <p>Institution: MFA.</p>
                                    <p id="artifactData">
                                    All data is updated directly from the institutions. 
                                    </p>
@@ -483,7 +480,6 @@
                                </div>
                                -->
 							   <h3 id="ArtifactName2"> The Edo Provenance Project</h3>
-							   <p>Institution: MFA.</p>
 							   <ul id="ProvData">
 							   </ul>                             
                            </div>
