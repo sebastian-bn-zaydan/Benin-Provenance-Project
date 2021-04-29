@@ -111,23 +111,29 @@
 						<ul>
 							<li><i class="fas fa-tag"></i></li>
 						</ul>
-						Bronze, Plaque
+						${feature.properties.keyword}
 					</div>`;
 			var itemDetails = document.createElement("div");
 			itemDetails.className = "item-details"
 			var itemMeta = document.createElement("div");
 			itemMeta.className="item-meta-data open";
+			var repatriated = "refused"
+			switch (feature.properties.repatriated) {
+			case "p": repatriated = "promised"; break;
+			case "m": repatriated = "under consideration"; break;};
 			itemMeta.innerHTML = `
 						 <ul>
 							<li>
 								<i class="fas fa-map-marker-alt"></i>
-								<a href="${feature.properties.restaurant_url}">Not Returned</a></li>
+								<span><small>repatriation ${repatriated}</small></span></li>
 						</ul>`;
 			itemContent.appendChild(itemMeta);
 			singlePopularItem.appendChild(itemContent);
 			var supItem = document.createElement("div");
 			supItem.classList.add("slide-item");
 			supItem.appendChild(singlePopularItem);
+			supItem.classList.add(feature.properties.institution);
+			supItem.classList.add(feature.properties.keyword);
 			$('#artifact-preview').slick('slickAdd',supItem);
 		}
 	</script>
@@ -351,7 +357,25 @@
 					vals.push(checkboxes[i].value);
 				}
 			}
+			if (vals.length == 0) {
+				vals.push("All")
+			}
 			var keyword = document.getElementById("keywords-search").value;
+			console.log(vals,keyword)
+			console.log("here!!");
+			$('#artifact-preview').slick('slickGoTo', 0, false);
+			$('#artifact-preview').slick('slickUnfilter');
+			if ( !vals.includes("All")) {
+				var slidesToKeep = new Array();
+				for(var i=0;i<vals.length;i++){ slidesToKeep.push("."+vals[i]);}
+				slidesToKeep = slidesToKeep.join(',');
+				$('#artifact-preview').slick('slickGoTo', 0, false);
+				$('#artifact-preview').slick('slickFilter', slidesToKeep);
+			}
+			if (keyword!="All-Artifacts") {
+				$('#artifact-preview').slick('slickGoTo', 0, false);
+				$('#artifact-preview').slick('slickFilter', "."+keyword);
+			}
 			mapsPlaceholder[0].eachLayer(function(layer){
 				if (typeof layer.feature === 'undefined') {
 					return
@@ -759,7 +783,7 @@
 		  $('#artifact-preview').slick({
 			infinite: true,
 			arrows: false,
-			dots: true,
+			dots: false,
 			vertical: true,
 			slidesToShow: 2,
 			verticalSwiping: true,
