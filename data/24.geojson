@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection", 
+"features": [
+{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "24", "provenance": "16th/17th century", "place": "Royal Palace, Benin City", "yearStr": "1550", "year": "1550"}, "geometry": { "type": "Point","coordinates": [5.6042201, 6.302033799999999] } },
+{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "24", "provenance": "Court of Benin until 1897", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.5792201, 6.2870338] } },
+{"type": "Feature", "id": 2, "properties": {"index": "2", "item": "24", "provenance": "Col. Le-Poer-O'Shea, Royal Engineers Boundary Commission, 1897–1900", "place": "Lagos Island, Lagos, Nigeria", "yearStr": "1900", "year": "1900"}, "geometry": { "type": "Point","coordinates": [-97.0229992, 33.0613882] } },
+{"type": "Feature", "id": 3, "properties": {"index": "3", "item": "24", "provenance": "Sotheby's, London, March 8, 1957, no. 197", "place": "London, England", "yearStr": "8/5/1957", "year": "1957"}, "geometry": { "type": "Point","coordinates": [-0.1677583, 51.5173509] } },
+{"type": "Feature", "id": 4, "properties": {"index": "4", "item": "24", "provenance": "Julius Carlebach Gallery, New York, from 1957", "place": "New York City, NY, US", "yearStr": "1957", "year": "1957"}, "geometry": { "type": "Point","coordinates": [-74.0459728, 40.697775299999996] } },
+{"type": "Feature", "id": 5, "properties": {"index": "5", "item": "24", "provenance": "a private collector, until 1986;", "place": "New York City, NY, US", "yearStr": "1980", "year": "1980"}, "geometry": { "type": "Point","coordinates": [-73.99597279999999, 40.7327753] } },
+{"type": "Feature", "id": 6, "properties": {"index": "6", "item": "24", "provenance": "Sotheby's, New York, Nov. 18, 1986, no. 96", "place": "New York City, NY, US", "yearStr": "1986", "year": "1986"}, "geometry": { "type": "Point","coordinates": [-73.9609728, 40.762775299999994] } },
+{"type": "Feature", "id": 7, "properties": {"index": "7", "item": "24", "provenance": "Mr. and Mrs. Klaus G. Perls, New York, 1986–1991", "place": "New York City, NY, US", "yearStr": "1990", "year": "1990"}, "geometry": { "type": "Point","coordinates": [-74.05597279999999, 40.692775299999994] } },
+{"type": "Feature", "id": 8, "properties": {"index": "8", "item": "24", "provenance": "The MET", "place": "The MET nyc", "yearStr": "1991", "year": "1991"}, "geometry": { "type": "Point","coordinates": [-73.968244, 40.829436599999994] } }
+]}

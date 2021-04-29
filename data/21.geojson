@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection", 
+"features": [
+{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "21", "provenance": "16th/17th century", "place": "Royal Palace, Benin City", "yearStr": "1550", "year": "1550"}, "geometry": { "type": "Point","coordinates": [5.6442201, 6.3770337999999995] } },
+{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "21", "provenance": "Court of Benin until 1897;", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.6042201, 6.307033799999999] } },
+{"type": "Feature", "id": 2, "properties": {"index": "2", "item": "21", "provenance": "[John J. Klejman, New York, until 1958]", "place": "New York City, NY, US", "yearStr": "1950", "year": "1950"}, "geometry": { "type": "Point","coordinates": [-74.01097279999999, 40.7127753] } },
+{"type": "Feature", "id": 3, "properties": {"index": "3", "item": "21", "provenance": "Nelson A. Rockefeller, New York, on loan to The Museum of Primitive Art, New York, 1958–1972;", "place": "New York City, NY, US", "yearStr": "1958", "year": "1958"}, "geometry": { "type": "Point","coordinates": [-74.0509728, 40.6877753] } },
+{"type": "Feature", "id": 4, "properties": {"index": "4", "item": "21", "provenance": "The Museum of Primitive Art, New York, 1972–1978", "place": "The Museum of Primitive Art New York,, NY, US", "yearStr": "1972", "year": "1972"}, "geometry": { "type": "Point","coordinates": [-73.99148890000001, 40.7582389] } },
+{"type": "Feature", "id": 5, "properties": {"index": "5", "item": "21", "provenance": "The MET", "place": "The MET nyc", "yearStr": "1978", "year": "1978"}, "geometry": { "type": "Point","coordinates": [-73.953244, 40.81443659999999] } }
+]}

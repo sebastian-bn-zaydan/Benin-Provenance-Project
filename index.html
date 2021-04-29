@@ -234,17 +234,21 @@
                                 <ul>
                                     <li><i class="fas fa-tag"></i></li>
                                 </ul>
-                                Bronze, Plaque
+                                ${feature.properties.keyword}
                             </div>`;
 					var itemDetails = document.createElement("div");
 					itemDetails.className = "item-details"
 					var itemMeta = document.createElement("div");
 					itemMeta.className="item-meta-data open";
+					var repatriated = "refused"
+					switch (feature.properties.repatriated) {
+					case "p": repatriated = "promised"; break;
+					case "m": repatriated = "under consideration"; break;};
 					itemMeta.innerHTML = `
 					             <ul>
                                     <li>
 										<i class="fas fa-map-marker-alt"></i>
-										<a href="${feature.properties.restaurant_url}">Not Returned</a></li>
+										<span><small>repatriation ${repatriated}</small></span></li>
                                 </ul>`;
 					itemContent.appendChild(itemMeta);
 					singlePopularItem.appendChild(itemContent);
@@ -340,6 +344,76 @@
 </head>
 
 <body class="theme_body">
+	<!------------------------ MODAL -------------------------->
+	
+	 <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-dialog modal-vertical-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Welcome to Edo Provenance Project</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    </div>
+                    <div class="modal-body">
+                        This project visualizes the provenance data of artifacts stolen during the 1897 sacking of Benin city by the British military. 
+                            The aim is to organize the data in an accessible manner that fascilitates research and enables activists and academics to gain new insights
+                            and organize around the cause of returning stolen artifacts to their rightful place in Benin and other countries.<br/>
+                            - Press on a map marker or an title from the artifact preview to expand the item provenance. </br>
+                            - Press on a musuem from the pannel below the map to filter by institution, or press a musuem tag from an artifact preview.</br>
+                            - Navigate to the "find" page to search by name.
+                    </div>
+                    <div class="modal-footer">
+                        <label ><input class="dont" type="checkbox" name="dismiss"> Don't show again</label><br />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+	 <!-- Initiates Modal and Uses cookies for Dont Show Again Checkbox -->     
+		<script type="text/javascript">
+		 $(document).ready(function () {
+			$('#myModal').modal();
+		  
+		   //check cookies
+			function setCookie(){
+				var dis = document.cookie;
+				while(dis.charAt(0)==" ") dis = dis.substring(1);
+				if(dis.substring(8,13)== "false"){
+					$('#myModal').modal('hide');
+				}
+				console.log(dis.substring(8,13));
+			}
+			setCookie();    
+			 
+			 
+			  var $check = $("input.dont").click(function(){
+				if($("input.dont").is(":checked")){
+				document.cookie = "display=false";        
+				}else{
+				document.cookie = "display=true";        
+				}
+				  
+			  });
+		 });
+		</script>
+			   
+		<!-- Centers Modal Vertically -->      
+		<script type="text/javascript">
+			  function centerModal() {
+			$(this).css('display', 'block');
+			var $dialog = $(this).find(".modal-dialog");
+			var offset = ($(window).height() - $dialog.height()) / 2;
+			// Center modal vertically in window
+			$dialog.css("margin-top", offset);
+		}
+
+		$('.modal').on('show.bs.modal', centerModal);
+		$(window).on("resize", function () {
+			$('.modal:visible').each(centerModal);
+		});
+		</script>
+	<!------------------------ MODAL -------------------------->  
     
     <!-- preloader element started -->
         <div class="loader-wrap">
@@ -448,7 +522,7 @@
                            <div class="tab-pane active container" id="place">
                                <div class="search-form-box">
                                    <h3 id="ArtifactName"> The Edo Provenance Project</h3>
-                                   <p>Looted objects from the Benin Punative Raid, 1897</p>
+                                   <p>Looted objects from the Benin Punative Raid, 1897. Press on a map marker or an artifact name from the preview below to expand item information and provenance.</p>
                                    <img id="artifactImg" class="img-fluid" src="./assets/img/Looted_objects_from_the_Benin_Punative_Raid_1897.jpg" width="250" onerror="this.style.display=\'none\'"/>
                                </div>
                            </div>
@@ -481,6 +555,7 @@
                                -->
 							   <h3 id="ArtifactName2"> The Edo Provenance Project</h3>
 							   <ul id="ProvData" class="prov">
+								   Press on a map marker or an artifact name from the preview below to expand item information and provenance.
 							   </ul>                             
                            </div>
                         </div>

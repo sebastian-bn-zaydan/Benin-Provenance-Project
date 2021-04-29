@@ -224,7 +224,7 @@
 						className: "my-custom-pin"
 					});
 					// Update page elements here
-					keywords.add(feature.properties.name.keywords);
+					keywords.add(feature.properties.keyword);
 					museums.add(feature.properties.institution);
 					////////////////////////////
 					var marker = L.marker(latlng,{icon: thisIcon});
@@ -282,6 +282,16 @@
 				   checkbox.appendChild(checkboxSpan);
 				   document.getElementById("museums-checkbox").appendChild(checkbox);
 				}
+			   keywords = Array.from(keywords)
+			   keywords.unshift("All-Artifacts");
+			   console.log(keywords)
+			   for (const keyword of keywords) {
+				   var option = document.createElement("option");
+				   option.name = "keywords-search-input";
+				   option.value = keyword;
+				   option.textContent = keyword.replace("-"," ");
+				   document.getElementById("keywords-search").appendChild(option);
+				}
 			});
 		})
 	</script>
@@ -302,8 +312,8 @@
 	<script>
 	function bindPreview(name,item,img_url){
 		console.log(name,item,img_url);
-		document.getElementById("ArtifactName").innerText = name;
-		document.getElementById("artifactImg").src = img_url;
+		//document.getElementById("ArtifactName").innerText = name;
+		//document.getElementById("artifactImg").src = img_url;
 		var featureGeo = "./data/"+item+".geojson";
 		markersLayer.clearLayers();
 		ProvData = document.getElementById("ProvData");
@@ -341,15 +351,18 @@
 					vals.push(checkboxes[i].value);
 				}
 			}
+			var keyword = document.getElementById("keywords-search").value;
 			mapsPlaceholder[0].eachLayer(function(layer){
 				if (typeof layer.feature === 'undefined') {
 					return
 				}
-				if (vals.includes("All")) {
+				if (vals.includes("All") && keyword=="All-Artifacts") {
 					document.getElementById(layer.feature.properties.name+'_pin').style.backgroundColor = "#fdaf6f";
 					return
 				}
-				if (vals.includes(layer.feature.properties.institution)) {
+				if (vals.includes(layer.feature.properties.institution) && (layer.feature.properties.keyword==keyword || keyword=="All-Artifacts")) {
+					document.getElementById(layer.feature.properties.name+'_pin').style.backgroundColor = "#6699ff";
+				} else if (vals.includes("All") && (layer.feature.properties.keyword==keyword)) {
 					document.getElementById(layer.feature.properties.name+'_pin').style.backgroundColor = "#6699ff";
 				} else {
 					document.getElementById(layer.feature.properties.name+'_pin').style.backgroundColor = "#fdaf6f";
@@ -465,8 +478,8 @@
                                 <input type="text" placeholder="What are you looking for?">
                                 -->
                                 <select id="keywords-search">
+									<!--
                                     <option value="0">All Artifacts</option>
-                                    <!--
                                     <option value="1">Hotel</option>
                                     -->
                                 </select>
