@@ -1068,11 +1068,11 @@
 			  .data(data)
 			  .enter()
 			  .append("g")
-				.attr("text-anchor", function(d) { return (x(d.Institution) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start"; })
+				.attr("text-anchor", function(d) { return (x(d.Institution) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "middle" : "middle"; })
 				.attr("transform", function(d) { return "rotate(" + ((x(d.Institution) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(d['Value'])+10) + ",0)"; })
 			  .append("text")
 				.text(function(d){return(d.Institution)})
-				.attr("transform", function(d) { return (x(d.Institution) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
+				.attr("transform", function(d) { return ((x(d.Institution) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) >= Math.PI /2 && (x(d.Institution) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) <= Math.PI * 3/2) ? "rotate(90)" : "rotate(270)"; })
 				.style("font-size", "11px")
 				.attr("alignment-baseline", "middle")
 
