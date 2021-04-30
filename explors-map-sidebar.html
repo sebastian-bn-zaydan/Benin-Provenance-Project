@@ -192,7 +192,7 @@
 								className: "item-custom-pin"
 							});*/
 							var thisIcon = L.divIcon({
-								html: `<i class="fas fa-map-pin fa-2x" aria-hidden="false" style="color:#${rainbow.colourAt(feature.properties.year-1520)}"></i>`,
+								html: `<i class="fas fa-map-pin fa-2x" aria-hidden="false" style="color:${rainbowWrapper(feature.properties.year)}"></i>`,
 								iconAnchor: [6,15],
 								className: "my-custom-pin"
 							});
@@ -315,13 +315,13 @@
 		   var legend = L.control({position: 'topleft'});
 		   legend.onAdd = function (map) {
 				var div = L.DomUtil.create('div', 'info lflegend'),
-					grades = [2012, 1900, 1800, 1700 , 1599],
+					grades = [2012, 1960, 1930, 1897],
 					labels = [];
 					
 				for (var i = 0; i < grades.length; i++) {
 					div.innerHTML +=
-						'<i style="background:#' + rainbow.colourAt(grades[i]-1550) + '"></i> ' +
-						grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+						'<i style="background:#' + rainbow.colourAt(grades[i]-1897) + '"></i> ' +
+						grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '>');
 				}
 				return div;
 			};
@@ -330,8 +330,12 @@
 	</script>
 	<script>		  
 	var rainbow = new Rainbow(); 
-	rainbow.setNumberRange(1, 2012-1550);
-	rainbow.setSpectrum('#91ab9a', '#0a88d1');
+		  rainbow.setNumberRange(1, 2012-1897);
+		  rainbow.setSpectrum('#32976b', '#321237');c1f2fe
+		  //rainbow.setSpectrum('#c1f2fe', '#007bff');
+	function rainbowWrapper(year) {
+		return (year > 1897) ? "#"+rainbow.colourAt(year-1897) : "#32976b";
+	}
 	function MyFunction(val) {
 		markersLayer.clearLayers();
 		Object.keys(myL._layers).forEach(function(key){

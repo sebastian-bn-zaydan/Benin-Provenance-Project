@@ -1846,7 +1846,7 @@ label {
 }
 
 .slick-dots {
-   bottom: 60px;
+   bottom: -10px;
    list-style: none;
    position: absolute;
    width: 100%;

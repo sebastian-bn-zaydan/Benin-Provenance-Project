@@ -167,7 +167,7 @@
 								className: "item-custom-pin"
 							});*/
 							var thisIcon = L.divIcon({
-								html: `<i class="fas fa-map-pin fa-2x" aria-hidden="true" style="color:#${rainbow.colourAt(feature.properties.year-1520)}"></i>`,
+								html: `<i class="fas fa-map-pin fa-2x" aria-hidden="true" style="color:${rainbowWrapper(feature.properties.year)}"></i>`,
 								iconAnchor: [6,15],
 								className: "my-custom-pin"
 							});
@@ -302,13 +302,13 @@
 		   var legend = L.control({position: 'topleft'});
 		   legend.onAdd = function (map) {
 				var div = L.DomUtil.create('div', 'info lflegend'),
-					grades = [2012, 1900, 1800, 1700 , 1599],
+					grades = [2012, 1960, 1930, 1897],
 					labels = [];
 					
 				for (var i = 0; i < grades.length; i++) {
 					div.innerHTML +=
-						'<i style="background:#' + rainbow.colourAt(grades[i]-1550) + '"></i> ' +
-						grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+						'<i style="background:#' + rainbow.colourAt(grades[i]-1897) + '"></i> ' +
+						grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '>');
 				}
 				return div;
 			};
@@ -341,9 +341,13 @@
 		  transform: rotate(45deg);
 		  opacity: 0.8;
 		  border: 1px solid #FFFFFF`
-	 var rainbow = new Rainbow(); 
-		  rainbow.setNumberRange(1, 2012-1550);
-		  rainbow.setSpectrum('#91ab9a', '#0a88d1');
+	var rainbow = new Rainbow(); 
+		  rainbow.setNumberRange(1, 2012-1897);
+		  rainbow.setSpectrum('#32976b', '#321237');c1f2fe
+		  //rainbow.setSpectrum('#c1f2fe', '#007bff');
+	function rainbowWrapper(year) {
+		return (year > 1897) ? "#"+rainbow.colourAt(year-1897) : "#32976b";
+	}
 	function MyFunction(val) {
 		markersLayer.clearLayers();
 		Object.keys(myL._layers).forEach(function(key){
@@ -828,6 +832,16 @@
             </div>
             <div class="row">
                 <div id="media-slide" class="col-md-12 testimonial-carousel">
+                    <div class="single-testimonial text-center">
+                        <div class="testimonials" align="center">
+							<a class="media-link" href="https://www.artnews.com/art-news/news/germany-returns-benin-bronzes-2022-declaration-1234591348/">
+							<img src="https://mma.prnewswire.com/media/1033565/PMC_ARTnews_Logo.jpg" alt="listico">
+							<div style="height:60px;">
+                            <span>Germany Commits to Returning Benin Bronzes Starting in 2022.</span>
+                            </div>
+                            </a>
+                        </div>
+                    </div> <!-- ./ single testimonail end -->
                     <div class="single-testimonial text-center">
                         <div class="testimonials" align="center">
 							<a class="media-link" href="https://www.aljazeera.com/news/2021/4/16/from-germany-to-ireland-a-fresh-push-to-return-the-benin-bronzes">
