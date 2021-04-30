@@ -1,8 +1,8 @@
 {
 "type": "FeatureCollection", 
 "features": [
-{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "34", "provenance": "16th/17th century", "place": "Royal Palace, Benin City", "yearStr": "1550", "year": "1550"}, "geometry": { "type": "Point","coordinates": [5.6292200999999995, 6.3220338] } },
-{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "34", "provenance": "Court of Benin until 1897", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.5792201, 6.3270338] } },
-{"type": "Feature", "id": 2, "properties": {"index": "3", "item": "34", "provenance": "Willhöfft, G. (around 1900) - collector", "place": "Grmany", "yearStr": "1900", "year": "1900"}, "geometry": { "type": "Point","coordinates": [10.416526, 51.210691000000004] } },
-{"type": "Feature", "id": 3, "properties": {"index": "4", "item": "34", "provenance": "Grassi Museum of Ethnopology in Leipzig", "place": "Leipzig, Saxony, Germany", "yearStr": "1929", "year": "1929"}, "geometry": { "type": "Point","coordinates": [12.3430747, 51.3596955] } }
+{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "34", "provenance": "16th/17th century", "place": "Royal Palace, Benin City", "yearStr": "1599", "year": "1599"}, "geometry": { "type": "Point","coordinates": [5.5792201, 6.2870338] } },
+{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "34", "provenance": "Court of Benin until 1897", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.5792201, 6.3570338] } },
+{"type": "Feature", "id": 2, "properties": {"index": "3", "item": "34", "provenance": "Willhöfft, G. (around 1900) - collector", "place": "Grmany", "yearStr": "1900", "year": "1900"}, "geometry": { "type": "Point","coordinates": [10.476526, 51.145691] } },
+{"type": "Feature", "id": 3, "properties": {"index": "4", "item": "34", "provenance": "Grassi Museum of Ethnopology in Leipzig", "place": "Leipzig, Saxony, Germany", "yearStr": "1929", "year": "1929"}, "geometry": { "type": "Point","coordinates": [12.3980747, 51.3146955] } }
 ]}
