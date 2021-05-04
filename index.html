@@ -144,9 +144,10 @@
 				$('#tagList').slick('slickAdd',newTag);
 			};
 			
-			function mapOnclick(name,item,img_url){
+			function mapOnclick(name,item,img_url,item_link){
 				name,item,img_url
-				document.getElementById("ArtifactName").innerText = name;
+				//document.getElementById("ArtifactName").innerText = name;
+				document.getElementById("ArtifactName").innerHTML = `<a href="${item_link}"> ${name} </a>`;
 				document.getElementById("ArtifactName2").innerText = name;
 				document.getElementById("artifactImg").src = img_url;
 				//console.log(feature.properties.item)
@@ -202,7 +203,7 @@
 				document.getElementById("tagAll").textContent = data.features.length+ " Artifacts";
 				myL= L.geoJson(data,{
 				  onEachFeature: function onEachFeature(feature,layer){
-					layer.on('click', function (e) {mapOnclick(feature.properties.name,feature.properties.item,feature.properties.img_url)})
+					layer.on('click', function (e) {mapOnclick(feature.properties.name,feature.properties.item,feature.properties.img_url,feature.properties.item_link)})
 			      },
 				pointToLayer: function(feature,latlng){
 					// Code to bind the features to their preview
@@ -344,7 +345,7 @@
 		  border: 1px solid #FFFFFF`
 	var rainbow = new Rainbow(); 
 		  rainbow.setNumberRange(1, 2012-1897);
-		  rainbow.setSpectrum('#32976b', '#321237');c1f2fe
+		  rainbow.setSpectrum('#32976b', '#321237');
 		  //rainbow.setSpectrum('#c1f2fe', '#007bff');
 	function rainbowWrapper(year) {
 		return (year > 1897) ? "#"+rainbow.colourAt(year-1897) : "#32976b";
