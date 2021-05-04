@@ -1,10 +1,10 @@
 {
 "type": "FeatureCollection", 
 "features": [
-{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "23", "provenance": "16th/17th century", "place": "Royal Palace, Benin City", "yearStr": "1599", "year": "1599"}, "geometry": { "type": "Point","coordinates": [5.6142201, 6.2870338] } },
-{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "23", "provenance": "Court of Benin until 1897", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.639220099999999, 6.307033799999999] } },
-{"type": "Feature", "id": 2, "properties": {"index": "2", "item": "23", "provenance": "Sotheby's, London, May 20, 1964, no. 114", "place": "London, England", "yearStr": "20/5/1964", "year": "1964"}, "geometry": { "type": "Point","coordinates": [-0.1027583, 51.5173509] } },
-{"type": "Feature", "id": 3, "properties": {"index": "3", "item": "23", "provenance": "Paul Rose", "place": "New York City, NY, US", "yearStr": "1970", "year": "1970"}, "geometry": { "type": "Point","coordinates": [-73.9559728, 40.7277753] } },
-{"type": "Feature", "id": 4, "properties": {"index": "4", "item": "23", "provenance": "Robert Owen Lehman, New York", "place": "New York City, NY, US", "yearStr": "1980", "year": "1980"}, "geometry": { "type": "Point","coordinates": [-74.05597279999999, 40.7427753] } },
-{"type": "Feature", "id": 5, "properties": {"index": "5", "item": "23", "provenance": "Mr. and Mrs. Klaus G. Perls, New York, until 1990", "place": "New York City, NY, US", "yearStr": "1990", "year": "1990"}, "geometry": { "type": "Point","coordinates": [-74.0209728, 40.7277753] } }
+{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "23", "provenance": "16th/17th century", "place": "Royal Palace, Benin City", "yearStr": "1599", "year": "1599"}, "geometry": { "type": "Point","coordinates": [5.6292200999999995, 6.3620338] } },
+{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "23", "provenance": "Court of Benin until 1897", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.6492201, 6.342033799999999] } },
+{"type": "Feature", "id": 2, "properties": {"index": "2", "item": "23", "provenance": "Sotheby's, London, May 20, 1964, no. 114", "place": "London, England", "yearStr": "20/5/1964", "year": "1964"}, "geometry": { "type": "Point","coordinates": [-0.1377583, 51.5223509] } },
+{"type": "Feature", "id": 3, "properties": {"index": "3", "item": "23", "provenance": "Paul Rose", "place": "New York City, NY, US", "yearStr": "1970", "year": "1970"}, "geometry": { "type": "Point","coordinates": [-74.04097279999999, 40.7127753] } },
+{"type": "Feature", "id": 4, "properties": {"index": "4", "item": "23", "provenance": "Robert Owen Lehman, New York", "place": "New York City, NY, US", "yearStr": "1980", "year": "1980"}, "geometry": { "type": "Point","coordinates": [-74.04097279999999, 40.707775299999994] } },
+{"type": "Feature", "id": 5, "properties": {"index": "5", "item": "23", "provenance": "Mr. and Mrs. Klaus G. Perls, New York, until 1990", "place": "New York City, NY, US", "yearStr": "1990", "year": "1990"}, "geometry": { "type": "Point","coordinates": [-73.9709728, 40.7427753] } }
 ]}

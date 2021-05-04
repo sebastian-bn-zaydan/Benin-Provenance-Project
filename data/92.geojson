@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection", 
+"features": [
+{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "92", "provenance": "19th century", "place": "Royal Palace, Benin City", "yearStr": "1800", "year": "1800"}, "geometry": { "type": "Point","coordinates": [5.6242201, 6.3670338] } },
+{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "92", "provenance": "In 1897 the kingdom was conquered and its Oba (King) Ovonramwen was exiled.", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.634220099999999, 6.3620338] } },
+{"type": "Feature", "id": 2, "properties": {"index": "2", "item": "92", "provenance": "Paul and Ruth Tishman, New York, by 1966 to 1984", "place": "New York City", "yearStr": "1966", "year": "1966"}, "geometry": { "type": "Point","coordinates": [-74.04097279999999, 40.707775299999994] } },
+{"type": "Feature", "id": 3, "properties": {"index": "4", "item": "92", "provenance": "National Museum of African art", "place": "Smithsonian National Museum of African Art, Independence Avenue Southwest, Washington, DC", "yearStr": "1983", "year": "1983"}, "geometry": { "type": "Point","coordinates": [-76.99551299999999, 38.852988] } }
+]}

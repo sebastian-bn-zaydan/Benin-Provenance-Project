@@ -1,8 +1,8 @@
 {
 "type": "FeatureCollection", 
 "features": [
-{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "48", "provenance": "18th century", "place": "Royal Palace, Benin City", "yearStr": "1750", "year": "1750"}, "geometry": { "type": "Point","coordinates": [5.5792201, 6.3320338] } },
-{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "48", "provenance": "Court of Benin until 1897", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.6642201, 6.342033799999999] } },
-{"type": "Feature", "id": 2, "properties": {"index": "2", "item": "48", "provenance": "Eduard Schmidt, collector", "place": "Greenwich, London, England", "yearStr": "1898", "year": "1898"}, "geometry": { "type": "Point","coordinates": [-0.010178600000000001, 51.4633675] } },
-{"type": "Feature", "id": 3, "properties": {"index": "4", "item": "48", "provenance": "Ethnologisches Museum Berlin", "place": "Berlin, Germany", "yearStr": "1899", "year": "1899"}, "geometry": { "type": "Point","coordinates": [13.384954, 52.49000659999999] } }
+{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "48", "provenance": "18th century", "place": "Royal Palace, Benin City", "yearStr": "1750", "year": "1750"}, "geometry": { "type": "Point","coordinates": [5.6192201, 6.342033799999999] } },
+{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "48", "provenance": "Court of Benin until 1897", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.5892200999999995, 6.382033799999999] } },
+{"type": "Feature", "id": 2, "properties": {"index": "2", "item": "48", "provenance": "Eduard Schmidt, collector", "place": "Greenwich, London, England", "yearStr": "1898", "year": "1898"}, "geometry": { "type": "Point","coordinates": [-0.015178600000000002, 51.4833675] } },
+{"type": "Feature", "id": 3, "properties": {"index": "4", "item": "48", "provenance": "Ethnologisches Museum Berlin", "place": "Berlin, Germany", "yearStr": "1899", "year": "1899"}, "geometry": { "type": "Point","coordinates": [13.454954, 52.54500659999999] } }
 ]}

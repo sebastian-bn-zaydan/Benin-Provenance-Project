@@ -254,6 +254,7 @@
 					var repatriated = "refused"
 					switch (feature.properties.repatriated) {
 					case "p": repatriated = "promised"; break;
+					case "y": repatriated = "underway"; break;
 					case "m": repatriated = "under consideration"; break;};
 					itemMeta.innerHTML = `
 					             <ul>
@@ -1090,11 +1091,11 @@
 	</script>
 	<script>
 		// set the dimensions and margins of the graph
-		var margin = {top: 50, right: 0, bottom: 0, left: 0},
-			width = 460 - margin.left - margin.right,
-			height = 460 - margin.top - margin.bottom,
-			innerRadius = 90,
-			outerRadius = Math.min(width, height) / 2;   // the outerRadius goes from the middle of the SVG area to the border
+		var margin = {top: 20, right: 0, bottom: 0, left: 50},
+			width = 420 - margin.left - margin.right,
+			height = 500 - margin.top - margin.bottom,
+			innerRadius = 30,
+			outerRadius = Math.min(width, height) / 3;   // the outerRadius goes from the middle of the SVG area to the border
 
 		// append the svg object
 		var peopleSvg = d3.select("#my_dataviz")

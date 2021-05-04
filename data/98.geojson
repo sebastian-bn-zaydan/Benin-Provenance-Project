@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection", 
+"features": [
+{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "98", "provenance": "late 18th century", "place": "Royal Palace, Benin City", "yearStr": "1880", "year": "1880"}, "geometry": { "type": "Point","coordinates": [5.594220099999999, 6.2920338] } },
+{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "98", "provenance": "Court of Benin until 1897", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.6092201, 6.342033799999999] } },
+{"type": "Feature", "id": 2, "properties": {"index": "2", "item": "98", "provenance": "Taken by Major William Alexander Crawford Cockburn, Served in the Niger Coast Protectorate Force 1896-1901. Deputy Chief of Staff, British Expedition to Benin City, Nigeria 1897. Commandant at Benin City, 1898-1899. District Commissioner, Cross River, Nigeria 1901-5.", "place": "Cross River, Nigeria", "yearStr": "1898", "year": "1898"}, "geometry": { "type": "Point","coordinates": [8.5788014, 5.8301724] } },
+{"type": "Feature", "id": 3, "properties": {"index": "3", "item": "98", "provenance": "The British Musuem", "place": "London, England", "yearStr": "1898", "year": "1898"}, "geometry": { "type": "Point","coordinates": [-0.1277583, 51.5473509] } }
+]}

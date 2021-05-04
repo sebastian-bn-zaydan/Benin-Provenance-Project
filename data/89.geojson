@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection", 
+"features": [
+{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "89", "provenance": "19th century", "place": "Royal Palace, Benin City", "yearStr": "1800", "year": "1800"}, "geometry": { "type": "Point","coordinates": [5.6542201, 6.382033799999999] } },
+{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "89", "provenance": "In 1897 the kingdom was conquered and its Oba (King) Ovonramwen was exiled.", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.6442201, 6.2820338] } },
+{"type": "Feature", "id": 2, "properties": {"index": "2", "item": "89", "provenance": "Hans Meyer (collector) a German geology professor from Hildburghausen, later the director of the Institute for Colonial Geography in Leipzig.", "place": "Leipzig University, Saxony, Germany", "yearStr": "1899", "year": "1899"}, "geometry": { "type": "Point","coordinates": [12.4234615, 51.373573799999996] } },
+{"type": "Feature", "id": 3, "properties": {"index": "3", "item": "89", "provenance": "Meyer donated objects from, among others, Benin to the Ethnographic Museum, Stockholm. For this he received the Order of the North Star. ", "place": "Museum of Ethnography, stockholm", "yearStr": "1907", "year": "1907"}, "geometry": { "type": "Point","coordinates": [18.1401475, 59.28245359999999] } }
+]}

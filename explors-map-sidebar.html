@@ -122,6 +122,7 @@
 			var repatriated = "refused"
 			switch (feature.properties.repatriated) {
 			case "p": repatriated = "promised"; break;
+			case "y": repatriated = "underway"; break;
 			case "m": repatriated = "under consideration"; break;};
 			itemMeta.innerHTML = `
 						 <ul>

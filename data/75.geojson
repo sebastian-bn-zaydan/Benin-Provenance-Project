@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection", 
+"features": [
+{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "75", "provenance": "19th century", "place": "Royal Palace, Benin City", "yearStr": "1880", "year": "1880"}, "geometry": { "type": "Point","coordinates": [5.5792201, 6.3220338] } },
+{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "75", "provenance": "In 1897 the kingdom was conquered and its Oba (King) Ovonramwen was exiled.", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.6142201, 6.3570338] } },
+{"type": "Feature", "id": 2, "properties": {"index": "2", "item": "75", "provenance": "Webster, William Downing (1868-1913) In 1899 he travelled throughout Britain purchasing material from British soldiers returning from the Benin Expedition, amassing a large quantity of material that was carefully recorded in his catalogues. He published a series of catalogues detailing his collection during the next two decades, and staged a number of exhibitions of ethnographic material at Earl's Court.", "place": "Lagos, Nigeria", "yearStr": "1899", "year": "1899"}, "geometry": { "type": "Point","coordinates": [3.3642057, 6.5243793] } },
+{"type": "Feature", "id": 3, "properties": {"index": "3", "item": "75", "provenance": "Brought to London by webster", "place": "London, England", "yearStr": "1899", "year": "1899"}, "geometry": { "type": "Point","coordinates": [-0.14775829999999998, 51.4973509] } },
+{"type": "Feature", "id": 4, "properties": {"index": "4", "item": "75", "provenance": "Åke Johan Sjögren, married Marry Nobel 1895 (a royal swidish family), sold their estate 1916", "place": "Mälsåkers slott, sweden", "yearStr": "1900", "year": "1900"}, "geometry": { "type": "Point","coordinates": [17.2567564, 59.36431279999999] } },
+{"type": "Feature", "id": 5, "properties": {"index": "5", "item": "75", "provenance": "Acquired by Varldskultur Musuem", "place": "Museum of Ethnography, stockholm", "yearStr": "1901", "year": "1901"}, "geometry": { "type": "Point","coordinates": [18.080147500000002, 59.312453599999984] } }
+]}

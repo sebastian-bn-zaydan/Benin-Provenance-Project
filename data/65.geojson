@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection", 
+"features": [
+{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "65", "provenance": "16th/17th century", "place": "Royal Palace, Benin City", "yearStr": "1599", "year": "1599"}, "geometry": { "type": "Point","coordinates": [5.5892200999999995, 6.2870338] } },
+{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "65", "provenance": "In 1897 the kingdom was conquered and its Oba (King) Ovonramwen was exiled.", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.5892200999999995, 6.2870338] } },
+{"type": "Feature", "id": 2, "properties": {"index": "2", "item": "65", "provenance": "Captain Albert Maschmann, a German intermediary based in Lagos. According to Maschmann at the time, the cache of objects was the ‘last’  of the objects that became available after the British assault on Benin City in 1897.", "place": "Lagos, Nigeria", "yearStr": "1899", "year": "1899"}, "geometry": { "type": "Point","coordinates": [3.3442057, 6.5193793] } },
+{"type": "Feature", "id": 3, "properties": {"index": "3", "item": "65", "provenance": "Accession Date", "place": "Weltmuseum Wien, Heldenplatz, 1010 Wien, Austria", "yearStr": "1899", "year": "1899"}, "geometry": { "type": "Point","coordinates": [16.3837613, 48.169970000000006] } }
+]}

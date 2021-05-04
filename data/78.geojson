@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection", 
+"features": [
+{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "78", "provenance": "19th century", "place": "Royal Palace, Benin City", "yearStr": "1800", "year": "1800"}, "geometry": { "type": "Point","coordinates": [5.6592201, 6.3220338] } },
+{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "78", "provenance": "In 1897 the kingdom was conquered and its Oba (King) Ovonramwen was exiled.", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.6142201, 6.3620338] } },
+{"type": "Feature", "id": 2, "properties": {"index": "2", "item": "78", "provenance": "Count Eric Von Rosen, research Traveler, organized expeditions early 20th century", "place": "Rockelstad Castle, Sparreholm, Sweden", "yearStr": "1899", "year": "1899"}, "geometry": { "type": "Point","coordinates": [16.817113, 59.029019000000005] } },
+{"type": "Feature", "id": 3, "properties": {"index": "3", "item": "78", "provenance": "From this expeditions brought home and donated to the National Museum about 1,000 ethnographic objects", "place": "Museum of Ethnography, stockholm", "yearStr": "1901", "year": "1901"}, "geometry": { "type": "Point","coordinates": [18.165147500000003, 59.32245359999999] } }
+]}

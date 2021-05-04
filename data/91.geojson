@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection", 
+"features": [
+{"type": "Feature", "id": 0, "properties": {"index": "0", "item": "91", "provenance": "19th century", "place": "Royal Palace, Benin City", "yearStr": "1800", "year": "1800"}, "geometry": { "type": "Point","coordinates": [5.5792201, 6.3570338] } },
+{"type": "Feature", "id": 1, "properties": {"index": "1", "item": "91", "provenance": "In 1897 the kingdom was conquered and its Oba (King) Ovonramwen was exiled.", "place": "Royal Palace, Benin City", "yearStr": "1897", "year": "1897"}, "geometry": { "type": "Point","coordinates": [5.5842201, 6.347033799999999] } },
+{"type": "Feature", "id": 2, "properties": {"index": "2", "item": "91", "provenance": "Paul and Ruth Tishman, New York, by 1966 to 1984", "place": "New York City", "yearStr": "1966", "year": "1966"}, "geometry": { "type": "Point","coordinates": [-74.01097279999999, 40.6727753] } },
+{"type": "Feature", "id": 3, "properties": {"index": "3", "item": "91", "provenance": "Walt Disney World, 1984 to 2005", "place": "Walt Disney World Resort, Orlando, FL", "yearStr": "1984", "year": "1984"}, "geometry": { "type": "Point","coordinates": [-81.54574, 28.3871857] } },
+{"type": "Feature", "id": 4, "properties": {"index": "4", "item": "91", "provenance": "National Museum of African art", "place": "Smithsonian National Museum of African Art, Independence Avenue Southwest, Washington, DC", "yearStr": "2005", "year": "2005"}, "geometry": { "type": "Point","coordinates": [-77.01551299999998, 38.842988] } }
+]}
