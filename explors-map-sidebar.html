@@ -211,6 +211,7 @@
 			};
 			var museums = new Set();
 			var keywords = new Set();
+			var repatriations = new Set();
 			var mapboxAccessToken = 'pk.eyJ1IjoicGRrZmp6IiwiYSI6ImNramQ2bDY0MTExaHMydnFxdDgxMDUwNnoifQ.BsWJfll89GgrBCqGorqegw';
 			var map = L.map('map').setView([40, -20], 2);
 			markersLayer = new L.FeatureGroup();
@@ -240,6 +241,12 @@
 					// Update page elements here
 					keywords.add(feature.properties.keyword);
 					museums.add(feature.properties.institution);
+					var repatriated = "refused";
+					switch (feature.properties.repatriated) {
+					case "p": repatriated = "promised"; break;
+					case "y": repatriated = "underway"; break;
+					case "m": repatriated = "under consideration"; break;};
+					repatriations.add(repatriated)
 					////////////////////////////
 					var marker = L.marker(latlng,{icon: thisIcon});
 					marker.name = feature.properties.name;
@@ -312,6 +319,18 @@
 				   option.textContent = keyword.replace("-"," ");
 				   document.getElementById("keywords-search").appendChild(option);
 				}
+			   /*
+			   repatriations = Array.from(repatriations)
+			   repatriations.unshift("All Repatriations Statuses");
+			   console.log(repatriations)
+			   for (const repatriation of repatriations) {
+				   var option = document.createElement("option");
+				   option.name = "repatriations-search-input";
+				   option.value = repatriations;
+				   option.textContent = repatriation.replace("-"," ");
+				   document.getElementById("repatriation-search").appendChild(option);
+				}
+				*/
 			});
 		   var legend = L.control({position: 'topleft'});
 		   legend.onAdd = function (map) {
@@ -332,7 +351,7 @@
 	<script>		  
 	var rainbow = new Rainbow(); 
 		  rainbow.setNumberRange(1, 2012-1897);
-		  rainbow.setSpectrum('#32976b', '#321237');c1f2fe
+		  rainbow.setSpectrum('#32976b', '#321237');
 		  //rainbow.setSpectrum('#c1f2fe', '#007bff');
 	function rainbowWrapper(year) {
 		return (year > 1897) ? "#"+rainbow.colourAt(year-1897) : "#32976b";
@@ -396,8 +415,9 @@
 				vals.push("All")
 			}
 			var keyword = document.getElementById("keywords-search").value;
-			console.log(vals,keyword)
-			console.log("here!!");
+			//var repatriation = document.getElementById("repatriation-search").value;
+			//console.log(keyword,repatriation)
+			//console.log("here!!");
 			$('#artifact-preview').slick('slickGoTo', 0, false);
 			$('#artifact-preview').slick('slickUnfilter');
 			if ( !vals.includes("All")) {
@@ -543,6 +563,11 @@
                                     -->
                                 </select>
                                 <!--
+                                </br></br>
+                                <select id="repatriation-search">
+                                </select>
+                                -->
+                                <!--
                                 <input type="text" placeholder="Where to Look?" class="map-icon">
                                 -->
                                 </br></br></br>
@@ -567,12 +592,14 @@
                                     <div id="museums-checkbox" class="checkbox-list">
                                     </div>
                                 </div>
+                                <!--
                                 <select>
                                     <option value="0">Location</option>
                                     <option value="1">USA</option>
                                     <option value="2">Central Europ</option>
                                     <option value="3">Britain</option>
                                 </select>
+                                -->
                                 <button type="button" class="btn-search" onclick="filterMap()">Search Now</button>
                             </form>
                             <!-- advance form end -->
