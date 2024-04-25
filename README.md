@@ -1,6 +1,6 @@
 # [Benin-Provenance-Project](https://sebastian-bn-zaydan.github.io/Benin-Provenance-Project/)
 
-This project visualizes the provenance data available for artifacts stolen during the 1897 sacking of Benin city by the British military. The aim is to organize the data in an accessible manner that fascilitates research and enables activists and academics to gain new insights and organize around the cause of returning stolen artifacts to their rightful place in Benin and other countries. The website URL is: https://sebastian-bn-zaydan.github.io/Edo-Provenance-Project/
+This project visualizes the provenance data available for artifacts stolen during the 1897 sacking of Benin city by the British military. The aim is to organize the data in an accessible manner that fascilitates research and enables activists and academics to gain new insights and organize around the cause of returning stolen artifacts to their rightful place in Benin and other countries. The website URL is: [https://sebastian-bn-zaydan.github.io/Benin-Provenance-Project/](https://sebastian-bn-zaydan.github.io/Benin-Provenance-Project/)
 
 <img src="https://github.com/sebastian-bn-zaydan/Edo-Provenance-Project/blob/main/assets/img/epp.png" alt="drawing" width="400"/>
 
